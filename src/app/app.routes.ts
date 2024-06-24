@@ -1,7 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
 import {ConfigViewComponent} from "./config-view/config-view.component";
 import {DashboardViewComponent} from "./dashboard-view/dashboard-view.component";
-import {TimeComponent} from "./features/time/time.component";
+
 import {FeatureFlagGuard} from "./feature-flag.guard";
 import {NgModule} from "@angular/core";
 

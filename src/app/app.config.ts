@@ -4,19 +4,13 @@ import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/h
 
 import { routes } from './app.routes';
 import {FeatureFlagGuard} from "./feature-flag.guard";
-import {FeatureToggleService} from "./services/feature-toggle.service";
+import {CheckboxService} from "./services/feature-toggle.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
 
     FeatureFlagGuard,
-    FeatureToggleService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (featureToggleService: FeatureToggleService) => () => featureToggleService.loadFeatureFlags(),
-      deps: [FeatureToggleService],
-      multi: true
-    }
-  ]
+    CheckboxService,
+    ]
 };

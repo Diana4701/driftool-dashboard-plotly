@@ -1,0 +1,25 @@
+{
+  "features": {
+    "smoothing": [
+      {
+        "name": "moving_average",
+        "label":  "LAST WEEK"
+      }
+
+    ],
+    "systematical_analysis": [
+      {"name": "average", "label":  "LAST WEEK"},
+      {"name": "median", "label":  "LAST WEEK"},
+      {"name": "standard_deviation", "label":  "LAST WEEK"}
+    ],
+    "comparison": [
+      {"name": "week", "label":  "LAST WEEK"},
+      {"name": "month", "label":  "LAST WEEK"},
+      {"name": "day", "label":  "LAST WEEK"}
+    ],
+    "time":[
+      {"name": "last_week", "label":  "LAST WEEK"},
+      {"name":  "last_month", "label":  "LAST MONTH"}
+    ]
+  }
+}

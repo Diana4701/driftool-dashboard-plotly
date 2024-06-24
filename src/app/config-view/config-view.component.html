@@ -1,0 +1,56 @@
+<!--<div *ngIf="config" class="tree-container">
+  <h3>Configuration</h3>
+
+
+  <div class="tree-node">
+    <div class="node-title">Smoothing Methods</div>
+    <div class="tree-children">
+      <div *ngFor="let option of config.features.smoothing.options" class="tree-child">
+        <label>
+          <input type="checkbox" [(ngModel)]="option.enabled" (change)="onConfigChange('smoothing', option.name, option.enabled)" /> {{ option.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tree-node">
+    <div class="node-title">Systematical Calculations</div>
+    <div class="tree-children">
+      <div *ngFor="let option of config.features.systematical_analysis.options" class="tree-child">
+        <label>
+          <input type="checkbox" [(ngModel)]="option.enabled" (change)="onConfigChange('systematical_analysis', option.name, option.enabled)" /> {{ option.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tree-node">
+    <div class="node-title">Comparison Intervals</div>
+    <div class="tree-children">
+      <div *ngFor="let option of config.features.comparison.options" class="tree-child">
+        <label>
+          <input type="checkbox" [(ngModel)]="option.enabled" (change)="onConfigChange('comparison', option.name, option.enabled)" /> {{ option.name }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tree-node">
+    <div class="node-title">Time Interval for Data Analysis</div>
+    <div class="tree-children">
+      <div *ngFor="let option of config.features.time.options" class="tree-child">
+        <label>
+          <input type="checkbox" [(ngModel)]="option.enabled" (change)="onConfigChange('time', option.name, option.enabled)" /> {{option.name}}
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+

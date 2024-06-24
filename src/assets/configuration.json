@@ -1,0 +1,36 @@
+{
+  "features": {
+    "smoothing": {
+      "options": [
+        {
+          "name": "moving_average",
+          "enabled": false
+        },
+        {
+          "name": "exponential_smoothing",
+          "enabled": false
+        }
+      ]
+    },
+    "systematical_analysis": {
+      "options": [
+        {"name": "average", "enabled": false},
+        {"name": "median", "enabled": false},
+        {"name": "standard_deviation", "enabled": false}
+      ]
+    },
+    "comparison": {
+      "options": [
+        {"name": "week", "enabled": false},
+        {"name": "month", "enabled": false},
+        {"name": "day", "enabled": false}
+      ]
+    },
+    "time":{
+      "options": [
+        {"name": "last_week", "enabled":  false},
+        {"name":  "last_month", "enabled": false}
+      ]
+    }
+  }
+}

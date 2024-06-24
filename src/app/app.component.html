@@ -1,0 +1,8 @@
+<!--<div>
+  <button (click)="navigateTo('dashboard')">Go to Dashboard</button>
+  <button (click)="navigateTo('config')">Go to Config</button>
+</div> -->
+<router-outlet></router-outlet>
+<div *appFeatureToggle="{category: 'time', name: 'last_week'}">
+  <app-time></app-time>
+</div>

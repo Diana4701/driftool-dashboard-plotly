@@ -9,7 +9,6 @@ let DashboardComponent;
 export const routes: Routes = [
   { path: '', redirectTo: '/config', pathMatch: 'full' },
   { path: 'config', component: ConfigViewComponent },
-  {path: '', component:ConfigViewComponent},
   {path: 'dashboard', component:DashboardViewComponent},
   /*{path: 'dashboard',
     canActivate: [FeatureFlagGuard],

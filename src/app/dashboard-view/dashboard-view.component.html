@@ -1,0 +1,24 @@
+<div>
+  <h2>Dashboard</h2>
+
+  <div *ngIf="checkedCheckboxes.length > 0">
+    <h3>Checked Checkboxes:</h3>
+    <ul>
+      <li *ngFor="let checkbox of checkedCheckboxes">
+        {{ checkbox.label }} - {{ checkbox.name }}
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="checkedCheckboxes.length === 0">
+    <p>No checkboxes selected.</p>
+  </div>
+
+  <!--<div *ngFor="let key of objectKeys(checkboxes)">
+    <label>
+      <input type="checkbox" [checked]="checkboxes[key]" (change)="onCheckboxChange(key)">
+      {{ checkboxesData[key]?.label }}
+    </label>
+  </div>-->
+
+</div>

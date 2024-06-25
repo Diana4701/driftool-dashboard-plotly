@@ -1,13 +1,12 @@
-<form (ngSubmit)="onSubmit()">
-  <div *ngFor="let checkbox of checkboxData">
-    <label>
-      <input type="checkbox" [(ngModel)]="checkboxes[checkbox.name]" name="{{ checkbox.name }}"> {{ checkbox.label }}
-    </label>
-    <br>
-  </div>
-  <button type="submit">Go to dashboard</button>
-</form>
-
-
-
-
+<div>
+  <h2>Configuration View</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div *ngFor="let checkbox of checkboxData">
+      <label>
+        <input type="checkbox" [(ngModel)]="checkboxes[checkbox.name]" name="{{checkbox.name}}">
+        {{ checkbox.label }}
+      </label>
+    </div>
+    <button type="submit">Save and Go to Dashboard</button>
+  </form>
+</div>

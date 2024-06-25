@@ -1,60 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-import {CsvDataService} from "../services/csv-data.service";
-import {CheckboxService} from "../services/feature-toggle.service";
-import {RepositoryData} from "../repository-data";
-import moment from 'moment';
-import * as Plotly from 'plotly.js-dist-min';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {ConfigService} from "../services/config.service";
-import {Configuration} from "../configuration";
-import {NgForOf, NgIf} from "@angular/common";
-
-import {Router} from "@angular/router";
-
+import { Component, OnInit } from '@angular/core';
+import { CheckboxService } from '../services/feature-toggle.service';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
+  templateUrl: './dashboard-view.component.html',
   standalone: true,
-  imports: [
-    HttpClientModule,
-    NgIf,
-    NgForOf
-  ],
-  providers: [CsvDataService, CheckboxService, HttpClient, ConfigService],
-  template: `
-    <h2>Dashboard</h2>
-    <div *ngIf="checkedCheckboxes.length > 0">
-      <h3>Checked Checkboxes:</h3>
-      <ul>
-        <li *ngFor="let checkbox of checkedCheckboxes">
-          {{ checkbox.label }}
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="checkedCheckboxes.length === 0">
-      <p>No checkboxes selected.</p>
-    </div>
-  `,
+  imports: [NgIf, NgForOf],
   styleUrls: ['./dashboard-view.component.css']
 })
-
-
 export class DashboardViewComponent implements OnInit {
   checkboxes: { [key: string]: boolean } = {};
-  checkedCheckboxes: { name: string, label: string }[] = [];
-  checkboxData: any[] = [];
+  checkedCheckboxes: { label: string, name: string, checked: boolean }[] = [];
+  checkboxesData: { [key: string]: { label: string; name: string; checked: boolean } } = {};
 
   constructor(private checkboxService: CheckboxService) {}
 
   ngOnInit() {
-    this.checkboxes = this.checkboxService.getCheckboxes();
-    this.checkboxService.loadCheckboxes().subscribe(data => {
-      this.checkboxData = data;
-      this.checkedCheckboxes = this.checkboxData.filter((checkbox: any) => this.checkboxes[checkbox.name]);
+    this.checkboxService.checkboxes$.subscribe(data => {
+      this.checkboxesData = data;
+      this.initializeCheckboxes();
+      this.updateCheckedCheckboxes();
     });
   }
 
-  objectKeys(obj: any) {
-    return Object.keys(obj);
+  initializeCheckboxes() {
+    for (const key in this.checkboxesData) {
+      if (this.checkboxesData.hasOwnProperty(key)) {
+        this.checkboxes[key] = this.checkboxesData[key].checked;
+      }
+    }
   }
+
+  updateCheckedCheckboxes() {
+    this.checkedCheckboxes = Object.keys(this.checkboxes)
+      .filter(key => this.checkboxes[key])
+      .map(key => this.checkboxesData[key]);
+  }
+
+
 }

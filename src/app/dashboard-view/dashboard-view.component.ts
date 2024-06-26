@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckboxService } from '../services/feature-toggle.service';
 import { NgForOf, NgIf } from '@angular/common';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +15,14 @@ export class DashboardViewComponent implements OnInit {
   checkedCheckboxes: { label: string, name: string, checked: boolean }[] = [];
   checkboxesData: { [key: string]: { label: string; name: string; checked: boolean } } = {};
 
-  constructor(private checkboxService: CheckboxService) {}
+  constructor(private checkboxService: CheckboxService, private router: Router) {}
 
   ngOnInit() {
     this.checkboxService.checkboxes$.subscribe(data => {
       this.checkboxesData = data;
       this.initializeCheckboxes();
       this.updateCheckedCheckboxes();
+
     });
   }
 
@@ -38,5 +40,8 @@ export class DashboardViewComponent implements OnInit {
       .map(key => this.checkboxesData[key]);
   }
 
+  navigateToConfig() {
+    this.router.navigate(['/config']);
+  }
 
 }

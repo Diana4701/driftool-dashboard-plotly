@@ -25,12 +25,13 @@ export class ConfigViewComponent implements OnInit {
   ngOnInit() {
     this.checkboxService.loadCheckboxes().subscribe(data => {
       this.checkboxData = data;
+      const currentCheckboxes = this.checkboxService.getCheckboxes();
+      // Initialize checkboxes based on current state
       this.checkboxData.forEach(checkbox => {
-        this.checkboxes[checkbox.name] = false;
+        this.checkboxes[checkbox.name] = currentCheckboxes[checkbox.name]?.checked || false;
       });
     });
   }
-
 
   onSubmit() {
     const checkboxesData: { [key: string]: { label: string; name: string; checked: boolean } } = {};

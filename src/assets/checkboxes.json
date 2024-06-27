@@ -1,5 +1,6 @@
 [
-  { "name": "option1", "label": "Option 1" },
-  { "name": "option2", "label": "Option 2" },
-  { "name": "option3", "label": "Option 3" }
+  { "name": "average", "label": "Show average" },
+  { "name": "sum", "label": "Show sum" },
+  { "name": "last_three_days", "label": "Last 3 days" },
+  { "name": "last_seven_days", "label": "Last seven days" }
 ]

@@ -3,10 +3,11 @@
   <form (ngSubmit)="onSubmit()">
     <div *ngFor="let checkbox of checkboxData">
       <label>
-        <input type="checkbox" [(ngModel)]="checkboxes[checkbox.name]" name="{{checkbox.name}}">
+        <input type="checkbox" [(ngModel)]="checkboxes[checkbox.name]" name="{{checkbox.name}}"
+               (change)="updateTimeSelected()">
         {{ checkbox.label }}
       </label>
     </div>
-    <button type="submit">Save and Go to Dashboard</button>
+    <button type="submit"  [disabled]="!timeSelected" >Save and Go to Dashboard</button>
   </form>
 </div>

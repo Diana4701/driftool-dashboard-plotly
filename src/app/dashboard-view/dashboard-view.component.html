@@ -14,12 +14,11 @@
     <p>No checkboxes selected.</p>
   </div>
 
-  <!--<div *ngFor="let key of objectKeys(checkboxes)">
-    <label>
-      <input type="checkbox" [checked]="checkboxes[key]" (change)="onCheckboxChange(key)">
-      {{ checkboxesData[key]?.label }}
-    </label>
-  </div>-->
+  <div *ngIf="isValidSelection()">
+    <app-last-three-days *ngIf="isSelected('last_three_days') && isSelected('sum')" [operation]="'sum'"></app-last-three-days>
+    <app-last-three-days *ngIf="isSelected('last_three_days') && isSelected('average')" [operation]="'average'"></app-last-three-days>
+
+     </div>
 
   <button (click)="navigateToConfig()">Go Back to Config View</button>
 </div>

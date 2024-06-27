@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckboxService } from '../services/feature-toggle.service';
 import { NgForOf, NgIf } from '@angular/common';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import {LastThreeDaysComponent} from "../features/last-three-days/last-three-days.component";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard-view.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf],
+  imports: [NgIf, NgForOf, LastThreeDaysComponent],
   styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit {
@@ -22,7 +23,6 @@ export class DashboardViewComponent implements OnInit {
       this.checkboxesData = data;
       this.initializeCheckboxes();
       this.updateCheckedCheckboxes();
-
     });
   }
 
@@ -40,8 +40,17 @@ export class DashboardViewComponent implements OnInit {
       .map(key => this.checkboxesData[key]);
   }
 
+  isSelected(name: string): boolean {
+    return this.checkedCheckboxes.some(cb => cb.name === name);
+  }
+
+  isValidSelection(): boolean {
+    const hasTimeSelected = this.isSelected('last_three_days') || this.isSelected('last_seven_days');
+    const hasOperationSelected = this.isSelected('sum') || this.isSelected('average');
+    return hasTimeSelected && hasOperationSelected;
+  }
+
   navigateToConfig() {
     this.router.navigate(['/config']);
   }
-
 }

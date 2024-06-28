@@ -2,5 +2,7 @@
   { "name": "average", "label": "Show average" },
   { "name": "sum", "label": "Show sum" },
   { "name": "last_three_days", "label": "Last 3 days" },
-  { "name": "last_seven_days", "label": "Last seven days" }
+  { "name": "last_seven_days", "label": "Last 7 days" },
+  { "name": "first_three_days", "label": "First 3 days" }
+
 ]

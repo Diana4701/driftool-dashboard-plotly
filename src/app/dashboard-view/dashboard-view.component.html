@@ -1,3 +1,4 @@
+<!-- dashboard-view.component.html -->
 <div>
   <h2>Dashboard</h2>
 
@@ -15,10 +16,20 @@
   </div>
 
   <div *ngIf="isValidSelection()">
-    <app-last-three-days *ngIf="isSelected('last_three_days') && isSelected('sum')" [operation]="'sum'"></app-last-three-days>
-    <app-last-three-days *ngIf="isSelected('last_three_days') && isSelected('average')" [operation]="'average'"></app-last-three-days>
+    <app-time-period
+      *ngIf="isSelected('last_three_days')"
+      [timePeriod]="'threeDays'"
+      [showSum]="isSelected('sum')"
+      [showAverage]="isSelected('average')">
+    </app-time-period>
 
-     </div>
+    <app-time-period
+      *ngIf="isSelected('last_seven_days')"
+      [timePeriod]="'lastWeek'"
+      [showSum]="isSelected('sum')"
+      [showAverage]="isSelected('average')">
+    </app-time-period>
+  </div>
 
   <button (click)="navigateToConfig()">Go Back to Config View</button>
 </div>

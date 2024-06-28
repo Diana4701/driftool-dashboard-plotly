@@ -1,0 +1,14 @@
+<p>time works!</p>
+<!-- last-time-period.component.html -->
+<div>
+
+
+  <div *ngIf="showSum">
+    <app-sum [data]="lastTimePeriodData$ | async"></app-sum>
+  </div>
+
+  <div *ngIf="showAverage">
+    <app-average [data]="lastTimePeriodData$ | async"></app-average>
+  </div>
+</div>
+

@@ -1,14 +1,15 @@
+// dashboard-view.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CheckboxService } from '../services/feature-toggle.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { Router } from "@angular/router";
-import {LastThreeDaysComponent} from "../features/last-three-days/last-three-days.component";
+import { TimeComponent } from "../features/time/time.component";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard-view.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, LastThreeDaysComponent],
+  imports: [NgIf, NgForOf, TimeComponent],
   styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit {

@@ -1,13 +1,23 @@
 <div>
   <h2>Configuration View</h2>
   <form (ngSubmit)="onSubmit()">
-    <div *ngFor="let checkbox of checkboxData">
-      <label>
-        <input type="checkbox" [(ngModel)]="checkboxes[checkbox.name]" name="{{checkbox.name}}"
-               (change)="updateTimeSelected()">
-        {{ checkbox.label }}
-      </label>
+    <div *ngFor="let section of configSections">
+      <h3>{{ section.name }}</h3>
+      <div *ngFor="let option of section.options">
+        <label *ngIf="section.name !== 'timePeriodOptions'">
+          <input type="checkbox" [(ngModel)]="checkboxes[option.value].checked" name="{{ option.value }}"
+                 (change)="updateValidation()">
+          {{ option.label }}
+        </label>
+        <label *ngIf="section.name === 'timePeriodOptions'">
+          <input type="radio" [(ngModel)]="selectedTimePeriod" [value]="option.value" name="timePeriod"
+                 (change)="updateValidation()">
+          {{ option.label }}
+        </label>
+      </div>
     </div>
-    <button type="submit"  [disabled]="!timeSelected" >Save and Go to Dashboard</button>
+    <button type="submit" [disabled]="!isValid">Save and Go to Dashboard</button>
   </form>
+  <button (click)="resetAllSettings()">Reset All Settings</button>
+  <div *ngIf="validationMessage">{{ validationMessage }}</div>
 </div>

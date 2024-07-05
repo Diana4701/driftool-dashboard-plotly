@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LastThreeDaysComponent } from './last-three-days.component';
+import { VarianceComponent } from './variance.component';
 
-describe('LastThreeDaysComponent', () => {
-  let component: LastThreeDaysComponent;
-  let fixture: ComponentFixture<LastThreeDaysComponent>;
+describe('VarianceComponent', () => {
+  let component: VarianceComponent;
+  let fixture: ComponentFixture<VarianceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LastThreeDaysComponent]
+      imports: [VarianceComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LastThreeDaysComponent);
+    fixture = TestBed.createComponent(VarianceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

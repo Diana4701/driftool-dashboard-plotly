@@ -1,0 +1,24 @@
+.time-period-container {
+  display: flex;
+
+}
+
+.time-period-container app-time-period {
+  width: 100%; /* Default to full width */
+}
+
+
+@media (min-width: 769px) {
+  .time-period-container {
+    grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
+  }
+  .time-period-container app-time-period {
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .time-period-container {
+    grid-template-columns: 1fr; /* Full width on smaller screens */
+  }
+}

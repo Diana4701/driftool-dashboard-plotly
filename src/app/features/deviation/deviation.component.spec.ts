@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimeComponent } from './time.component';
+import { DeviationComponent } from './deviation.component';
 
-describe('TimeComponent', () => {
-  let component: TimeComponent;
-  let fixture: ComponentFixture<TimeComponent>;
+describe('DeviationComponent', () => {
+  let component: DeviationComponent;
+  let fixture: ComponentFixture<DeviationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimeComponent]
+      imports: [DeviationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TimeComponent);
+    fixture = TestBed.createComponent(DeviationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

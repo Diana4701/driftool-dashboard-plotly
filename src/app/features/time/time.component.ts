@@ -1,70 +1,67 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CsvDataService } from "../../services/csv-data.service";
 import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
+import {SumComponent} from "../sum/sum.component";
+import {AverageComponent} from "../average/average.component";
 import {AsyncPipe, NgIf} from "@angular/common";
-import { AverageComponent } from "../average/average.component";
-import { SumComponent } from "../sum/sum.component";
+import {DeviationComponent} from "../deviation/deviation.component";
+import {VarianceComponent} from "../variance/variance.component";
 
 @Component({
   selector: 'app-time-period',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    AverageComponent,
-    SumComponent,
-    NgIf
-  ],
   templateUrl: './time.component.html',
+  imports: [
+    SumComponent,
+    AverageComponent,
+    NgIf,
+    AsyncPipe,
+    DeviationComponent,
+    VarianceComponent
+  ],
   styleUrls: ['./time.component.css']
 })
 export class TimeComponent implements OnInit {
-  @Input() timePeriod: string = 'threeDays'; // Default to last three days
-  @Input() showSum = false;
-  @Input() showAverage = false;
+  @Input() operation: string = '';
+  @Input() timePeriod: string = '';
 
-  // Initialize with an empty array
   lastTimePeriodData$ = new BehaviorSubject<any[]>([]);
 
   constructor(private dataService: CsvDataService) {}
 
   ngOnInit() {
     this.dataService.data$
-      .pipe(
-        filter(data => data != null), // Ensure data is not null
-        map(data => this.getLastTimePeriodData(data, this.timePeriod))
-      )
-      .subscribe(filteredData => this.lastTimePeriodData$.next(filteredData));
+      .pipe(filter(data => !!data)) // Filter out undefined or null data
+      .subscribe(data => {
+        const filteredData = this.getTimePeriodData(data, this.timePeriod);
+        this.lastTimePeriodData$.next(filteredData);
+      });
   }
 
-  getLastTimePeriodData(data: any[], period: string): any[] {
-    const now = new Date();
-    let pastDate = new Date();
-
-    switch (period) {
-      case 'threeDays':
-        pastDate.setDate(now.getDate() - 3);
-        break;
-      case 'lastWeek':
-        pastDate.setDate(now.getDate() - 7);
-        break;
-      case 'lastMonth':
-        pastDate.setMonth(now.getMonth() - 1);
-        break;
-      default:
-        pastDate.setDate(now.getDate() - 3); // Default to last three days
+  getTimePeriodData(data: any[], period: string): any[] {
+    if (!data || data.length === 0) {
+      return []; // Handle empty data gracefully
     }
 
-    return data.filter(item => new Date(item.timestamp) >= pastDate);
-  }
+    const now = new Date();
+    let pastDate = new Date(now); // Clone the current date
 
-  onTimePeriodChange(event: any) {
-    this.timePeriod = event.target.value;
-    this.dataService.data$
-      .pipe(
-        filter(data => data != null), // Ensure data is not null
-        map(data => this.getLastTimePeriodData(data, this.timePeriod))
-      )
-      .subscribe(filteredData => this.lastTimePeriodData$.next(filteredData));
+    switch (period) {
+      case 'last_three_days':
+        pastDate.setDate(now.getDate() - 3);
+        return data.filter(item => new Date(item.timestamp) >= pastDate);
+      case 'first_three_days':
+        const startDate = new Date(data[0].timestamp); // Ensure data[0] exists
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 3);
+        return data.filter(item => new Date(item.timestamp) >= startDate && new Date(item.timestamp) <= endDate);
+      case 'last_week':
+        pastDate.setDate(now.getDate() - 7);
+        return data.filter(item => new Date(item.timestamp) >= pastDate);
+      default:
+        pastDate.setDate(now.getDate() - 3); // Default to last three days
+        return data.filter(item => new Date(item.timestamp) >= pastDate);
+    }
   }
 }

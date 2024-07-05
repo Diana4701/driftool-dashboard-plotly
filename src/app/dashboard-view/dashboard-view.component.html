@@ -1,4 +1,3 @@
-<!-- dashboard-view.component.html -->
 <div>
   <h2>Dashboard</h2>
 
@@ -6,7 +5,7 @@
     <h3>Checked Checkboxes:</h3>
     <ul>
       <li *ngFor="let checkbox of checkedCheckboxes">
-        {{ checkbox.label }} - {{ checkbox.name }}
+        {{ checkbox.label }} - {{ checkbox.value }}
       </li>
     </ul>
   </div>
@@ -15,20 +14,23 @@
     <p>No checkboxes selected.</p>
   </div>
 
-  <div *ngIf="isValidSelection()">
-    <app-time-period
-      *ngIf="isSelected('last_three_days')"
-      [timePeriod]="'threeDays'"
-      [showSum]="isSelected('sum')"
-      [showAverage]="isSelected('average')">
+  <div *ngIf="isValidSelection()" class="time-period-container">
+    <app-time-period *ngFor="let option of checkedCheckboxes"
+                     [timePeriod]="option.value">
     </app-time-period>
 
-    <app-time-period
-      *ngIf="isSelected('last_seven_days')"
-      [timePeriod]="'lastWeek'"
-      [showSum]="isSelected('sum')"
-      [showAverage]="isSelected('average')">
-    </app-time-period>
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'lastThreeDays'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'lastThreeDays'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'lastThreeDays'"></app-time-period>
+
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'firstThreeDays'"></app-time-period>
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'firstThreeDays'"></app-time-period>
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'firstThreeDays'"></app-time-period>
+
+    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'lastWeek'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'lastWeek'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'lastWeek'"></app-time-period>
+
   </div>
 
   <button (click)="navigateToConfig()">Go Back to Config View</button>

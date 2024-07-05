@@ -1,8 +1,28 @@
 [
-  { "name": "average", "label": "Show average" },
-  { "name": "sum", "label": "Show sum" },
-  { "name": "last_three_days", "label": "Last 3 days" },
-  { "name": "last_seven_days", "label": "Last 7 days" },
-  { "name": "first_three_days", "label": "First 3 days" }
-
+  {
+    "name": "calculations",
+    "options": [
+      { "value": "average", "label": "Show average" },
+      { "value": "sum", "label": "Show sum" },
+      { "value": "variance", "label": "Show variance" },
+      { "value": "standard_deviation", "label": "Show standard deviation" }
+    ]
+  },
+  {
+    "name": "comparison",
+    "options": [
+      { "value": "lastThreeDays", "label": "Compare with Last 3 Days" },
+      { "value": "firstThreeDays", "label": "Compare with First 3 Days" },
+      { "value": "lastWeek", "label": "Compare with Last 7 Days" }
+    ]
+  },
+  {
+    "name": "timePeriodOptions",
+    "options": [
+      { "value": "last_three_days", "label": "Last 3 Days" },
+      { "value": "first_three_days", "label": "First 3 Days" },
+      { "value": "last_week", "label": "Last 7 Days" }
+    ]
+  }
 ]
+

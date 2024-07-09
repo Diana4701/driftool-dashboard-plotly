@@ -1,24 +1,17 @@
-
-<!-- last-time-period.component.html -->
-
 <div class="plot-container">
   <div *ngIf="operation === 'sum'" class="plot-wrapper">
-    <app-sum [data]="lastTimePeriodData$ | async"></app-sum>
+    <app-sum [data]="lastTimePeriodData$ | async"  [timePeriod]="timePeriod"></app-sum>
   </div>
 
   <div *ngIf="operation === 'average'" class="plot-wrapper">
-    <app-average [data]="lastTimePeriodData$ | async"></app-average>
+    <app-average [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod" [timePeriodLabels]="timePeriodLabels"></app-average>
   </div>
-
- <!-- <div *ngIf="operation === 'variance' || operation === 'standard_deviation'" class="plot-wrapper full-width">
-    <app-variance [data]="lastTimePeriodData$ | async"></app-variance>
-  </div> -->
 
   <div *ngIf="operation === 'standard_deviation'" class="plot-wrapper">
-    <app-deviation [data]="lastTimePeriodData$ | async"></app-deviation>
+    <app-deviation [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod"></app-deviation>
   </div>
+
+
+
+
 </div>
-
-
-
-

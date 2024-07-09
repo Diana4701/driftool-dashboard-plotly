@@ -1,0 +1,89 @@
+.config-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.config-container h2 {
+  margin-bottom: 20px;
+  color: #8a3ab9;
+  font-family: sans-serif;
+}
+
+.config-container h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.config-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.config-container input[type="checkbox"],
+.config-container input[type="radio"] {
+  margin-right: 10px;
+}
+
+.validation-message {
+  margin-top: 10px;
+  color: red;
+  font-size: 24px;
+  font-family:  sans-serif;
+
+}
+
+.custom-btn:disabled {
+  background-color: #e0e0e0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background: linear-gradient(to right, #b36cff, #8a3ab9);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-primary {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.btn-secondary {
+  flex: 1;
+  margin-left: 10px;
+  background: #8a3ab9;
+}
+
+.btn:hover {
+  background: linear-gradient(to right, #8a3ab9, #b36cff);
+}
+
+
+
+.form-inline {
+  display: flex;
+  flex-direction: column; /* Adjust this as per your layout requirements */
+}
+
+

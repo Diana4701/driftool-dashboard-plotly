@@ -7,6 +7,8 @@ import {AverageComponent} from "../average/average.component";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {DeviationComponent} from "../deviation/deviation.component";
 import {VarianceComponent} from "../variance/variance.component";
+import {DataItem} from "../../models/model";
+
 
 @Component({
   selector: 'app-time-period',
@@ -25,8 +27,8 @@ import {VarianceComponent} from "../variance/variance.component";
 export class TimeComponent implements OnInit {
   @Input() operation: string = '';
   @Input() timePeriod: string = '';
-
-  lastTimePeriodData$ = new BehaviorSubject<any[]>([]);
+  @Input() timePeriodLabels: { [key: string]: string } = {};
+  lastTimePeriodData$ = new BehaviorSubject<DataItem[]>([]);
 
   constructor(private dataService: CsvDataService) {}
 
@@ -39,29 +41,33 @@ export class TimeComponent implements OnInit {
       });
   }
 
-  getTimePeriodData(data: any[], period: string): any[] {
+  getTimePeriodData(data: DataItem[], period: string): DataItem[] {
     if (!data || data.length === 0) {
       return []; // Handle empty data gracefully
     }
 
-    const now = new Date();
-    let pastDate = new Date(now); // Clone the current date
+    const repositories = Array.from(new Set(data.map(item => item.repository)));
+    const filteredData: DataItem[] = [];
 
-    switch (period) {
-      case 'last_three_days':
-        pastDate.setDate(now.getDate() - 3);
-        return data.filter(item => new Date(item.timestamp) >= pastDate);
-      case 'first_three_days':
-        const startDate = new Date(data[0].timestamp); // Ensure data[0] exists
-        const endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 3);
-        return data.filter(item => new Date(item.timestamp) >= startDate && new Date(item.timestamp) <= endDate);
-      case 'last_week':
-        pastDate.setDate(now.getDate() - 7);
-        return data.filter(item => new Date(item.timestamp) >= pastDate);
-      default:
-        pastDate.setDate(now.getDate() - 3); // Default to last three days
-        return data.filter(item => new Date(item.timestamp) >= pastDate);
-    }
+    repositories.forEach(repository => {
+      const repoData = data.filter(item => item.repository === repository);
+      repoData.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+      switch (period) {
+        case 'last_three_days':
+          filteredData.push(...repoData.slice(-3)); // Pushes the last three items
+          break;
+        case 'first_three_days':
+          filteredData.push(...repoData.slice(0, 3)); // Pushes the first three items
+          break;
+        case 'last_week':
+          filteredData.push(...repoData.slice(-7)); // Pushes the last seven items
+          break;
+        default:
+          filteredData.push(...repoData.slice(-7)); // Default to last three days
+          break;
+      }
+    });
+    return filteredData;
   }
 }

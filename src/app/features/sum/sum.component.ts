@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 
 @Component({
@@ -8,11 +8,13 @@ import * as Plotly from 'plotly.js-dist-min';
   styleUrls: ['./sum.component.css']
 })
 export class SumComponent implements OnInit, OnChanges {
+
   @Input() data: any;
   @Input() timePeriod!: string;
   @Input() operation!: string;
 
   ngOnInit() {
+    console.log('Time Period:', this.timePeriod);
     this.plotData();
   }
 
@@ -20,11 +22,15 @@ export class SumComponent implements OnInit, OnChanges {
     this.plotData();
   }
 
-  calculateSum(data: any[]): number {
+  calculateAverage(data: any[]): number {
     return data.reduce((sum, item) => sum + parseFloat(item.value), 0);
   }
 
   plotData() {
+    if (!this.data || this.data.length === 0) {
+      return;
+    }
+    console.log('Plotting data for Time Period:', this.timePeriod);
     const groupedData = this.groupDataByRepository(this.data);
     const traces: Partial<Plotly.ScatterData>[] = [];
 
@@ -33,14 +39,14 @@ export class SumComponent implements OnInit, OnChanges {
       const timestamps = repoData.map(item => item.timestamp);
       const values = repoData.map(item => parseFloat(item.value));
 
-      const result = this.calculateSum(repoData);
+      const result = this.calculateAverage(repoData);
 
       traces.push({
         x: timestamps,
-        y: values,
+        y: new Array(timestamps.length).fill(result),
         type: 'scatter',
         mode: 'lines',
-        name: repository,
+        name: `${repository} - Sum: ${result.toFixed(2)}`,
         line: { shape: 'linear' }
       });
     });
@@ -54,7 +60,6 @@ export class SumComponent implements OnInit, OnChanges {
         title: 'Sum'
       }
     };
-
     Plotly.newPlot('chart-sum', traces, layout);
   }
 

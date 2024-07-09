@@ -1,5 +1,6 @@
 export interface ConfigSection {
   name: string;
+  label:string;
   options: CheckboxOption[];
 }
 export interface CheckboxOption {
@@ -10,4 +11,10 @@ export interface CheckboxOption {
 
 export interface CheckboxState {
  [key: string]: { label: string; value: string; checked: boolean };
+}
+
+export interface DataItem {
+  timestamp: string;
+  repository: string;
+  value: number;
 }

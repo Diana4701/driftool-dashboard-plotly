@@ -8,12 +8,20 @@ import { CheckboxOption, CheckboxState, ConfigSection } from '../models/model';
 })
 export class CheckboxService {
   private localStorageKey = 'checkboxesState';
+  private sessionStorageKey = 'checkboxesStateSession';
   private checkboxesSubject = new BehaviorSubject<CheckboxState>({});
   checkboxes$ = this.checkboxesSubject.asObservable();
 
+  private defaultViewSubject = new BehaviorSubject<string>(''); // BehaviorSubject for default view
+  defaultView$ = this.defaultViewSubject.asObservable(); // Observable to subscribe to default view changes
+
+  private selectedTimePeriodSubject = new BehaviorSubject<string | null>(null);
+  selectedTimePeriod$ = this.selectedTimePeriodSubject.asObservable();
+
   constructor(private http: HttpClient) {
-    this.loadPersistedState();
+    this.initializeState();
   }
+
 
   setCheckboxes(checkboxes: CheckboxState) {
     this.checkboxesSubject.next(checkboxes);
@@ -22,6 +30,14 @@ export class CheckboxService {
 
   getCheckboxes(): CheckboxState {
     return this.checkboxesSubject.value;
+  }
+
+  setSelectedTimePeriod(timePeriod: string | null) {
+    this.selectedTimePeriodSubject.next(timePeriod);
+  }
+
+  getSelectedTimePeriod(): string | null {
+    return this.selectedTimePeriodSubject.value;
   }
 
   loadCheckboxes(): Observable<ConfigSection[]> {
@@ -39,8 +55,6 @@ export class CheckboxService {
     this.setCheckboxes(resetState);
   }
 
-
-
   validateConstraints(checkboxes: CheckboxState, selectedTimePeriod: string | null): { isValid: boolean, message: string } {
     const timePeriodSelected = selectedTimePeriod !== null;
     const selectedCheckboxes = Object.values(checkboxes).filter(option => option.checked).length;
@@ -56,12 +70,24 @@ export class CheckboxService {
 
   private persistState(state: CheckboxState) {
     localStorage.setItem(this.localStorageKey, JSON.stringify(state));
+    sessionStorage.setItem(this.sessionStorageKey, JSON.stringify(state));
   }
 
-  private loadPersistedState() {
-    const persistedState = localStorage.getItem(this.localStorageKey);
-    if (persistedState) {
-      this.checkboxesSubject.next(JSON.parse(persistedState));
+  private initializeState() {
+    const sessionState = sessionStorage.getItem(this.sessionStorageKey);
+    if (sessionState) {
+      this.checkboxesSubject.next(JSON.parse(sessionState));
+    } else {
+      this.checkboxesSubject.next({});
+      localStorage.removeItem(this.localStorageKey);
     }
+    this.setDefaultView();
+  }
+
+   setDefaultView() {
+    // Logic to determine and set default view based on checkboxes or other criteria
+    // For example, you can set it to 'dashboard' if no checkboxes are selected
+    const defaultView = Object.keys(this.checkboxesSubject.value).length === 0 ? 'dashboard' : '';
+    this.defaultViewSubject.next(defaultView);
   }
 }

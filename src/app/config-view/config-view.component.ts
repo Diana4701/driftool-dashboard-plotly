@@ -22,7 +22,6 @@ import {CheckboxState, CheckboxOption, ConfigSection} from "../models/model";
 export class ConfigViewComponent implements OnInit {
   configSections: ConfigSection[] = [];
   checkboxes: CheckboxState = {};
-  timeSelected: boolean = false;
   selectedTimePeriod: string | null = null;
   validationMessage: string = '';
   isValid: boolean = false;
@@ -35,6 +34,7 @@ export class ConfigViewComponent implements OnInit {
       this.initializeCheckboxes();
       this.updateValidation();
     });
+    this.selectedTimePeriod = this.checkboxService.getSelectedTimePeriod();
   }
 
   initializeCheckboxes() {
@@ -59,13 +59,15 @@ export class ConfigViewComponent implements OnInit {
     const validation = this.checkboxService.validateConstraints(this.checkboxes, this.selectedTimePeriod);
     if (validation.isValid) {
       this.checkboxService.setCheckboxes(this.checkboxes);
-      if (this.selectedTimePeriod) {
+      this.checkboxService.setSelectedTimePeriod(this.selectedTimePeriod);
+      console.log('selected time period:', this.selectedTimePeriod);
+     /* if (this.selectedTimePeriod) {
         Object.keys(this.checkboxes).forEach(key => {
           if (this.configSections.find(section => section.name === 'timePeriodOptions')?.options.find(option => option.value === key)) {
             this.checkboxes[key].checked = (key === this.selectedTimePeriod);
           }
         });
-      }
+      }*/
       this.router.navigate(['/dashboard']);
     } else {
       this.validationMessage = validation.message;
@@ -77,7 +79,6 @@ export class ConfigViewComponent implements OnInit {
     this.isValid = validation.isValid;
     this.validationMessage = validation.message;
   }
-
 
   resetAllSettings() {
     this.configSections.forEach(section => {

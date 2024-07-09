@@ -7,7 +7,7 @@ import {NgModule} from "@angular/core";
 
 let DashboardComponent;
 export const routes: Routes = [
-  { path: '', redirectTo: '/config', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'config', component: ConfigViewComponent },
   {path: 'dashboard', component:DashboardViewComponent},
   /*{path: 'dashboard',

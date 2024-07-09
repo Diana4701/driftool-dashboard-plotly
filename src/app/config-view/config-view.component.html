@@ -1,8 +1,8 @@
-<div>
-  <h2>Configuration View</h2>
+<div class="config-container">
+  <h2>Feature Toggles</h2>
   <form (ngSubmit)="onSubmit()">
     <div *ngFor="let section of configSections">
-      <h3>{{ section.name }}</h3>
+      <h3>{{ section.label }}</h3> <!-- Display the section label here -->
       <div *ngFor="let option of section.options">
         <label *ngIf="section.name !== 'timePeriodOptions'">
           <input type="checkbox" [(ngModel)]="checkboxes[option.value].checked" name="{{ option.value }}"
@@ -16,8 +16,10 @@
         </label>
       </div>
     </div>
-    <button type="submit" [disabled]="!isValid">Save and Go to Dashboard</button>
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary custom-btn" [disabled]="!isValid">Save and Go to Dashboard</button>
+      <button type="button" class="btn btn-secondary" (click)="resetAllSettings()">Reset All Settings</button>
+    </div>
   </form>
-  <button (click)="resetAllSettings()">Reset All Settings</button>
-  <div *ngIf="validationMessage">{{ validationMessage }}</div>
+  <div class="validation-message" *ngIf="validationMessage">{{ validationMessage }}</div>
 </div>

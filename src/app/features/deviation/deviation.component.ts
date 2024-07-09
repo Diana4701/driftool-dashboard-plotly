@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 @Component({
   selector: 'app-deviation',
@@ -7,7 +7,7 @@ import * as Plotly from 'plotly.js-dist-min';
   templateUrl: './deviation.component.html',
   styleUrl: './deviation.component.css'
 })
-export class DeviationComponent {
+export class DeviationComponent implements OnInit, OnChanges{
 
   @Input() data: any;
   @Input() timePeriod!: string;
@@ -47,12 +47,12 @@ export class DeviationComponent {
     });
 
     const layout = {
-      title: `Deviation over ${this.timePeriod}`,
+      title: `Statement Drift over ${this.timePeriod}`,
       xaxis: {
         title: 'Date'
       },
       yaxis: {
-        title: 'Deviation'
+        title: 'Statement Drift'
       }
     };
 

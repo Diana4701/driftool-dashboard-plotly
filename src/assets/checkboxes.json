@@ -1,23 +1,31 @@
 [
   {
-    "name": "calculations",
+    "name": "sd",
+    "label": "DRIFTOOL Output",
     "options": [
-      { "value": "average", "label": "Show average" },
-      { "value": "sum", "label": "Show sum" },
-      { "value": "variance", "label": "Show variance" },
-      { "value": "standard_deviation", "label": "Show standard deviation" }
+      {"value":  "sd", "label": "Show Statement Drift" }
     ]
   },
   {
-    "name": "comparison",
+    "name": "calculations",
+    "label": "Statistical Analysis ",
     "options": [
-      { "value": "lastThreeDays", "label": "Compare with Last 3 Days" },
-      { "value": "firstThreeDays", "label": "Compare with First 3 Days" },
-      { "value": "lastWeek", "label": "Compare with Last 7 Days" }
+      { "value": "average", "label": "Show Average" },
+      { "value": "sum", "label": "Show Sum" },
+      { "value": "variance", "label": "Show Variance" },
+      { "value": "standard_deviation", "label": "Show Standard Deviation" }
+    ]
+  },
+  {
+    "name": "comparisonConfiguration",
+    "label": "Comparison Configuration",
+    "options": [
+      { "value": "comparison", "label": "Time Comparison" }
     ]
   },
   {
     "name": "timePeriodOptions",
+    "label": "Time Options",
     "options": [
       { "value": "last_three_days", "label": "Last 3 Days" },
       { "value": "first_three_days", "label": "First 3 Days" },

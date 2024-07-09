@@ -1,50 +1,68 @@
 // dashboard-view.component.ts
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CheckboxService } from '../services/feature-toggle.service';
 import { Router } from "@angular/router";
-import { CheckboxState, CheckboxOption } from '../models/model';
-import {NgForOf, NgIf} from "@angular/common";
+import {CheckboxState, CheckboxOption, DataItem} from '../models/model';
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {TimeComponent} from "../features/time/time.component";
+import {ComparisonComponent} from "../features/comparison/comparison.component";
+import {CsvDataService} from "../services/csv-data.service";
+import {VarianceComponent} from "../features/variance/variance.component";
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard-view.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, TimeComponent],
+  imports: [NgIf, NgForOf, TimeComponent, NgClass, ComparisonComponent, VarianceComponent],
   styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit {
   checkboxes: CheckboxState = {};
   checkedCheckboxes: CheckboxOption[] = [];
-
-  constructor(private checkboxService: CheckboxService, private router: Router) {}
+  data: DataItem[] = [];
+  defaultView: string = '';
+  selectedTimePeriod: string | null = '';
+  constructor(private checkboxService: CheckboxService,
+              private router: Router,
+              private csvService: CsvDataService
+  ) {}
 
   ngOnInit() {
     this.checkboxService.checkboxes$.subscribe((data: CheckboxState) => {
       this.checkboxes = data;
-      this.updateCheckedCheckboxes();
+    });
+
+    this.csvService.data$.subscribe((data: DataItem[]) => {
+      this.data = data;
+    });
+
+
+    this.checkboxService.defaultView$.subscribe(view => {
+      this.defaultView = view; // Update default view when it changes
+    });
+
+    this.checkboxService.selectedTimePeriod$.subscribe((timePeriod) => {
+      this.selectedTimePeriod = timePeriod;
     });
   }
 
-  updateCheckedCheckboxes() {
+ /* defaultView() {
     this.checkedCheckboxes = Object.keys(this.checkboxes)
       .filter(key => this.checkboxes[key].checked)
       .map(key => ({ label: this.checkboxes[key].label, value: key }));
-  }
+  }*/
+
 
   isSelected(name: string): boolean {
     return this.checkboxes[name]?.checked;
   }
 
-  isValidSelection(): boolean {
-    // Customize based on your specific logic for validity
-    const hasTimeSelected = this.isSelected('last_three_days') || this.isSelected('first_three_days') || this.isSelected('last_week');
-    const hasOperationSelected = this.isSelected('average') || this.isSelected('sum');
-    return hasTimeSelected && hasOperationSelected;
-  }
 
   navigateToConfig() {
     this.router.navigate(['/config']);
   }
+
+
+
 }

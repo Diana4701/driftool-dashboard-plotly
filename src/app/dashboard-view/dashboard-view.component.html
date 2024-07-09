@@ -1,37 +1,54 @@
-<div>
+<div class="dashboard-container">
+  <header class="dashboard-header">
   <h2>Dashboard</h2>
-
-  <div *ngIf="checkedCheckboxes.length > 0">
+  </header>
+  <!--<div *ngIf="checkedCheckboxes.length > 0">
     <h3>Checked Checkboxes:</h3>
     <ul>
       <li *ngFor="let checkbox of checkedCheckboxes">
         {{ checkbox.label }} - {{ checkbox.value }}
       </li>
     </ul>
+  </div>-->
+ <!--<div *ngIf="checkedCheckboxes.length === 0">
+    <p>No checkboxes selected. Please go to the Settings panel and select the desired configuration.</p>
   </div>
+  <button (click)="navigateToConfig()">Set Configuration</button>
+-->
 
-  <div *ngIf="checkedCheckboxes.length === 0">
-    <p>No checkboxes selected.</p>
+  <div class="default-view" *ngIf="defaultView === 'dashboard'">
+    <p>No checkboxes selected. Please go to the Settings panel and select the desired configuration.</p>
   </div>
+  <button class="btn btn-dashboard" (click)="navigateToConfig()">Set Configuration</button>
 
-  <div *ngIf="isValidSelection()" class="time-period-container">
-    <app-time-period *ngFor="let option of checkedCheckboxes"
-                     [timePeriod]="option.value">
-    </app-time-period>
+ <!-- <div class="feature-toggles">
+    <label><input type="checkbox" (change)="toggleFeature('drillDown', $event)"> Drill-Down</label>
+    <label><input type="checkbox" (change)="toggleFeature('zoom', $event)"> Zoom</label>
+    <label><input type="checkbox" (change)="toggleFeature('filters', $event)"> Filters</label>
+    <label><input type="checkbox" (change)="toggleFeature('windowSelection', $event)"> Window Selection</label>
+  </div>-->
 
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'lastThreeDays'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'lastThreeDays'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'lastThreeDays'"></app-time-period>
+  <app-time-period *ngFor="let option of checkedCheckboxes"
+                   [timePeriod]="option.value">
+  </app-time-period>
 
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'firstThreeDays'"></app-time-period>
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'firstThreeDays'"></app-time-period>
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'firstThreeDays'"></app-time-period>
+  <div class="plotly-container" [ngClass]="{
+    'one-graph': checkedCheckboxes.length === 1,
+    'two-graphs': checkedCheckboxes.length === 2,
+    'three-graphs': checkedCheckboxes.length === 3
+  }">
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'last_three_days'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('average')"  [operation]="'average'" [timePeriod]="'last_three_days'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'last_three_days'"></app-time-period>
 
-    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('sum')" [operation]="'sum'" [timePeriod]="'lastWeek'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('average')" [operation]="'average'" [timePeriod]="'lastWeek'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_seven_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'lastWeek'"></app-time-period>
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'first_three_days'"></app-time-period>
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('average')"  [operation]="'average'" [timePeriod]="'first_three_days'"></app-time-period>
+    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('standard_deviation')"  [operation]="'standard_deviation'" [timePeriod]="'first_three_days'"></app-time-period>
 
+    <app-time-period *ngIf="isSelected('last_week') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'last_week'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_week') && isSelected('average')"  [operation]="'average'" [timePeriod]="'last_week'"></app-time-period>
+    <app-time-period *ngIf="isSelected('last_week') && isSelected('standard_deviation')"  [operation]="'standard_deviation'" [timePeriod]="'last_week'"></app-time-period>
+
+  <!--  <app-comparison *ngIf="comparisonEnabled" [timePeriod1]="selectedTimePeriod1" [timePeriod2]="selectedTimePeriod2" [operation]="selectedOperation"></app-comparison> -->
   </div>
-
-  <button (click)="navigateToConfig()">Go Back to Config View</button>
 </div>

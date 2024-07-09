@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
+import {DataItem, CheckboxOption} from "../../models/model";
+import {ChartService} from "../../services/chart-service.service";
 
 @Component({
   selector: 'app-average',
@@ -11,55 +13,60 @@ export class AverageComponent implements OnInit, OnChanges {
   @Input() data: any;
   @Input() timePeriod!: string;
   @Input() operation!: string;
+  @Input() timePeriodLabels: { [key: string]: string } = {};
 
-  ngOnInit() {
-    this.plotData();
+  chartId: string = 'chart-average';
+  zoomEnabled: boolean = true;
+
+  constructor(private chartService: ChartService) { }
+
+  ngOnInit(): void {
+    this.plotAverageChart();
   }
 
-  ngOnChanges() {
-    this.plotData();
+  ngOnChanges(changes: SimpleChanges) {
+    this.plotAverageChart();
   }
 
-  calculateAverage(data: any[]): number {
-    const sum = data.reduce((sum, item) => sum + parseFloat(item.value), 0);
-    return sum / data.length;
-  }
-
-  plotData() {
+  async plotAverageChart() {
     const groupedData = this.groupDataByRepository(this.data);
     const traces: Partial<Plotly.ScatterData>[] = [];
 
     Object.keys(groupedData).forEach(repository => {
       const repoData = groupedData[repository];
       const timestamps = repoData.map(item => item.timestamp);
-      const values = repoData.map(item => parseFloat(item.value));
-
       const result = this.calculateAverage(repoData);
 
       traces.push({
         x: timestamps,
-        y: values,
+        y: new Array(timestamps.length).fill(result),
         type: 'scatter',
         mode: 'lines',
-        name: repository,
+        name: `${repository} - Avg: ${result.toFixed(2)}`,
         line: { shape: 'linear' }
       });
     });
 
     const layout = {
-      title: `Average over ${this.timePeriod}`,
-      xaxis: {
-        title: 'Date'
-      },
-      yaxis: {
-        title: 'Average'
-      }
+      title: `Average over ${this.timePeriodLabels[this.timePeriod]}`,
+      xaxis: { title: 'Date' },
+      yaxis: { title: 'Average' }
     };
 
-    Plotly.newPlot('chart-average', traces, layout);
+    const config = {
+      scrollZoom: false,
+      pan: true,
+    };
+
+    await this.chartService.createChart(this.chartId, traces, layout, config);
   }
 
-  groupDataByRepository(data: any[]): { [key: string]: any[] } {
+  toggleZoom() {
+    this.zoomEnabled = !this.zoomEnabled;
+    this.chartService.toggleZoom(this.chartId, this.zoomEnabled);
+  }
+
+  private groupDataByRepository(data: any[]): { [key: string]: any[] } {
     return data.reduce((acc, item) => {
       if (!acc[item.repository]) {
         acc[item.repository] = [];
@@ -67,5 +74,12 @@ export class AverageComponent implements OnInit, OnChanges {
       acc[item.repository].push(item);
       return acc;
     }, {} as { [key: string]: any[] });
+  }
+
+  private calculateAverage(data: any[]): number {
+    // Implement your average calculation logic
+    // Example:
+    const sum = data.reduce((total, item) => total + parseFloat(item.value), 0);
+    return sum / data.length;
   }
 }

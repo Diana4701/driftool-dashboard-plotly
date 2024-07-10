@@ -61,13 +61,13 @@ export class ConfigViewComponent implements OnInit {
       this.checkboxService.setCheckboxes(this.checkboxes);
       this.checkboxService.setSelectedTimePeriod(this.selectedTimePeriod);
       console.log('selected time period:', this.selectedTimePeriod);
-     /* if (this.selectedTimePeriod) {
+     if (this.selectedTimePeriod) {
         Object.keys(this.checkboxes).forEach(key => {
           if (this.configSections.find(section => section.name === 'timePeriodOptions')?.options.find(option => option.value === key)) {
             this.checkboxes[key].checked = (key === this.selectedTimePeriod);
           }
         });
-      }*/
+      }
       this.router.navigate(['/dashboard']);
     } else {
       this.validationMessage = validation.message;

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import {DataItem, CheckboxOption} from "../../models/model";
 import {ChartService} from "../../services/chart-service.service";
@@ -9,18 +9,19 @@ import {ChartService} from "../../services/chart-service.service";
   templateUrl: './average.component.html',
   styleUrls: ['./average.component.css']
 })
-export class AverageComponent implements OnInit, OnChanges {
+export class AverageComponent implements AfterViewInit, OnChanges {
   @Input() data: any;
   @Input() timePeriod!: string;
   @Input() operation!: string;
   @Input() timePeriodLabels: { [key: string]: string } = {};
+  @ViewChild('chartAverage') chartAverage!: ElementRef;
 
-  chartId: string = 'chart-average';
+ chartId: string = 'chart-average';
   zoomEnabled: boolean = true;
 
   constructor(private chartService: ChartService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.plotAverageChart();
   }
 
@@ -48,7 +49,7 @@ export class AverageComponent implements OnInit, OnChanges {
     });
 
     const layout = {
-      title: `Average over ${this.timePeriodLabels[this.timePeriod]}`,
+      title: `Average over ${this.timePeriod}`,
       xaxis: { title: 'Date' },
       yaxis: { title: 'Average' }
     };
@@ -58,12 +59,12 @@ export class AverageComponent implements OnInit, OnChanges {
       pan: true,
     };
 
-    await this.chartService.createChart(this.chartId, traces, layout, config);
+    await this.chartService.createChart(this.chartAverage.nativeElement.id, traces, layout, config);
   }
 
   toggleZoom() {
     this.zoomEnabled = !this.zoomEnabled;
-    this.chartService.toggleZoom(this.chartId, this.zoomEnabled);
+    this.chartService.toggleZoom(this.chartAverage.nativeElement.id, this.zoomEnabled);
   }
 
   private groupDataByRepository(data: any[]): { [key: string]: any[] } {

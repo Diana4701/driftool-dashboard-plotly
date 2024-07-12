@@ -8,25 +8,26 @@ import {CheckboxService} from "./app/services/feature-toggle.service";
 import {lastValueFrom, tap} from "rxjs";
 import {appConfig} from "./app/app.config";
 import {FeatureFlagGuard} from "./app/feature-flag.guard";
+import {ConfigService} from "./app/services/config.service";
 
 
 //bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
 
-function initializeAppFactory(featureToggleService: CheckboxService) {
-  return () => lastValueFrom(featureToggleService.loadCheckboxes());
+function initializeAppFactory(configService: ConfigService) {
+  return () => lastValueFrom(configService.loadConfig());
 }
 
 bootstrapApplication(AppComponent, {providers: [
     provideHttpClient(),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
-
+    ConfigService,
     FeatureFlagGuard,
     CheckboxService,
     {
       provide: APP_INITIALIZER,
       useFactory:  initializeAppFactory,
-      deps: [CheckboxService],
+      deps: [ConfigService],
       multi: true
     }
 

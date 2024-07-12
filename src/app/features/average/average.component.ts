@@ -16,15 +16,14 @@ export class AverageComponent implements AfterViewInit, OnChanges {
   @Input() timePeriodLabels: { [key: string]: string } = {};
   @ViewChild('chartAverage') chartAverage!: ElementRef;
 
- chartId: string = 'chart-average';
-  zoomEnabled: boolean = true;
+ //chartId: string = 'chart-average';
+ // zoomEnabled: boolean = true;
 
   constructor(private chartService: ChartService) { }
 
   ngAfterViewInit(): void {
     this.plotAverageChart();
   }
-
   ngOnChanges(changes: SimpleChanges) {
     this.plotAverageChart();
   }
@@ -59,12 +58,14 @@ export class AverageComponent implements AfterViewInit, OnChanges {
       pan: true,
     };
 
-    await this.chartService.createChart(this.chartAverage.nativeElement.id, traces, layout, config);
+    await this.chartService.createChart("'chart-average'", traces, layout, config);
   }
 
   toggleZoom() {
-    this.zoomEnabled = !this.zoomEnabled;
-    this.chartService.toggleZoom(this.chartAverage.nativeElement.id, this.zoomEnabled);
+    /*this.zoomEnabled = !this.zoomEnabled;
+    this.chartService.toggleZoom("'chart-average'", this.zoomEnabled);
+   */
+    this.chartService.toggleZoom(this.chartAverage.nativeElement.id);
   }
 
   private groupDataByRepository(data: any[]): { [key: string]: any[] } {
@@ -78,9 +79,10 @@ export class AverageComponent implements AfterViewInit, OnChanges {
   }
 
   private calculateAverage(data: any[]): number {
-    // Implement your average calculation logic
-    // Example:
     const sum = data.reduce((total, item) => total + parseFloat(item.value), 0);
     return sum / data.length;
   }
-}
+
+  }
+
+

@@ -3,18 +3,19 @@ import {Component, Input, OnInit} from '@angular/core';
 import { CheckboxService } from '../services/feature-toggle.service';
 import { Router } from "@angular/router";
 import {CheckboxState, CheckboxOption, DataItem} from '../models/model';
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {TimeComponent} from "../features/time/time.component";
 import {ComparisonComponent} from "../features/comparison/comparison.component";
 import {CsvDataService} from "../services/csv-data.service";
 import {VarianceComponent} from "../features/variance/variance.component";
+import {Observable} from "rxjs";
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard-view.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, TimeComponent, NgClass, ComparisonComponent, VarianceComponent],
+  imports: [NgIf, NgForOf, TimeComponent, NgClass, ComparisonComponent, VarianceComponent, AsyncPipe],
   styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit {
@@ -23,6 +24,8 @@ export class DashboardViewComponent implements OnInit {
   data: DataItem[] = [];
   defaultView: string = '';
   selectedTimePeriod: string | null = '';
+  timePeriods$: Observable<string[]> = this.checkboxService.getTimePeriods();
+  operations$: Observable<string[]> = this.checkboxService.getOperations();
   constructor(private checkboxService: CheckboxService,
               private router: Router,
               private csvService: CsvDataService

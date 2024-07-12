@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CsvDataService } from "../../services/csv-data.service";
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import {SumComponent} from "../sum/sum.component";
 import {AverageComponent} from "../average/average.component";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {DeviationComponent} from "../deviation/deviation.component";
 import {VarianceComponent} from "../variance/variance.component";
 import {DataItem} from "../../models/model";
+import {SumComponent} from "../sum/sum.component";
 
 
 @Component({

@@ -29,7 +29,7 @@ export class ConfigViewComponent implements OnInit {
   constructor(private router: Router, private checkboxService: CheckboxService) {}
 
   ngOnInit() {
-    this.checkboxService.loadCheckboxes().subscribe((data: ConfigSection[]) => {
+    this.checkboxService.config$.subscribe((data: ConfigSection[]) => {
       this.configSections = data;
       this.initializeCheckboxes();
       this.updateValidation();

@@ -36,8 +36,11 @@ export class TimePeriodStrategyComponent implements TimePeriodStrategy {
         case 'last_week':
           filteredData.push(...repoData.slice(-7)); // Pushes the last seven items
           break;
+        case 'all_weeks':
+          filteredData.push(...repoData); // Pushes the last seven items
+          break;
         default:
-          filteredData.push(...repoData.slice(-7)); // Default to last three days
+          filteredData.push(...repoData); // Default to all weeks
           break;
       }
     });

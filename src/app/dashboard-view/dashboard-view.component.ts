@@ -36,7 +36,7 @@ import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/ti
 export class DashboardViewComponent implements OnInit {
   data: DataItem[] = [];
   selectedConfig: { operation: string[], timePeriod: string } = { operation: [], timePeriod: '' };
-  @ViewChild('strategyContainer', { read: ViewContainerRef, static: true }) viewContainerRef!: ViewContainerRef;
+  @ViewChild('strategyContainer', { read: ViewContainerRef, static: true}) viewContainerRef!: ViewContainerRef;
   private timePeriodStrategy: TimePeriodStrategy = new TimePeriodStrategyComponent();
   constructor(
     private operationContextService: StrategyContextService,

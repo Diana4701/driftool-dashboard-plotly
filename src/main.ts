@@ -20,7 +20,6 @@ bootstrapApplication(AppComponent, {providers: [
     provideHttpClient(),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
-    FeatureToggleService,
     StrategyConfigService,
     {
       provide: APP_INITIALIZER,

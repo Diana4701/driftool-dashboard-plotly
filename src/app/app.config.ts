@@ -5,10 +5,11 @@ import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/h
 import { routes } from './app.routes';
 
 import {FeatureToggleService} from "./services/feature-toggle.service";
+import {StrategyContextService} from "./services/strategy-context.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
-    FeatureToggleService
+    StrategyContextService
   ]
 };

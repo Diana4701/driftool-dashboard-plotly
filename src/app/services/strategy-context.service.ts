@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {AnalysisStrategy} from "../strategies/analysis-strategy";
 
 import {SumStrategyComponent} from "../strategies/sum-strategy/sum-strategy.component";
@@ -17,7 +17,7 @@ import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/ti
   providedIn: 'root'
 })
 export class StrategyContextService {
-  private configUrl = '../../assets/configuration.json';
+  private configUrl = '../assets/configuration.json';
   private configSubject = new BehaviorSubject<ConfigSection[]>([]);
   config$ = this.configSubject.asObservable();
   private operationConfigSubject = new BehaviorSubject<{operation: string[], timePeriod: string}>({operation: [], timePeriod: ''});
@@ -33,6 +33,7 @@ export class StrategyContextService {
 
 
   constructor(private http: HttpClient) { }
+
 
   loadStrategies(): Observable<ConfigSection[]> {
     return this.http.get<ConfigSection[]>(this.configUrl).pipe(
@@ -52,12 +53,13 @@ export class StrategyContextService {
     return this.strategyComponentMap[operation];
   }
 
- /* executeOperation(operation: string, data: DataItem[], timePeriod: string): number {
-    if (this.strategyMapComponent[operation]) {
-      return this.strategyMapComponent[operation].execute(data, timePeriod);
+  public executeOperation(operation: string, data: DataItem[], timePeriod: string): number {
+    const strategyComponent = this.getStrategyComponent(operation);
+    if (strategyComponent) {
+      return strategyComponent.execute(data, timePeriod);
     }
-    return 0;
-  }*/
+    return 0; // Default value if strategy is not found
+  }
 
 
 

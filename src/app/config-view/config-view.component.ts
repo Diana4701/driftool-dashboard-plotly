@@ -32,12 +32,13 @@ import {StrategyContextService} from "../services/strategy-context.service";
 })
 export class ConfigViewComponent implements OnInit {
   configSections: ConfigSection[] = [];
-  selectedConfig: { operation: string[], timePeriod: string } = { operation: [], timePeriod: '' };
+  selectedConfig: {operation: string[], timePeriod: string} = {operation: [], timePeriod: ''};
   checkboxState: CheckboxState = {};
 
   constructor(private contextService: StrategyContextService, private router: Router) {}
 
   ngOnInit() {
+    // Load config sections and initialize selectedConfig
     this.contextService.loadStrategies().subscribe(config => {
       this.configSections = config;
       this.initializeSelections();
@@ -68,12 +69,9 @@ export class ConfigViewComponent implements OnInit {
   }
 
   resetAllSettings() {
-    this.selectedConfig = { operation: [], timePeriod: '' };
-    this.checkboxState = {};
+    this.selectedConfig = {operation: [], timePeriod: ''};
     this.initializeSelections();
   }
-
-
 
 
 

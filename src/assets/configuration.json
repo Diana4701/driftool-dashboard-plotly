@@ -11,9 +11,7 @@
     "label": "Statistical Analysis ",
     "options": [
       { "value": "average", "label": "Show Average" },
-      { "value": "sum", "label": "Show Sum" },
-      { "value": "variance", "label": "Show Variance" },
-      { "value": "standard_deviation", "label": "Show Standard Deviation" }
+      { "value": "sum", "label": "Show Sum" }
     ]
   },
   {
@@ -29,8 +27,7 @@
     "options": [
       { "value": "last_three_days", "label": "Last 3 Days" },
       { "value": "first_three_days", "label": "First 3 Days" },
-      { "value": "last_week", "label": "Last 7 Days" },
-      { "value": "all_weeks", "label": "All weeks" }
+      { "value": "last_week", "label": "Last 7 Days" }
 
     ]
   }

@@ -7,26 +7,25 @@ import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/h
 import {FeatureToggleService} from "./app/services/feature-toggle.service";
 import {lastValueFrom, tap} from "rxjs";
 import {appConfig} from "./app/app.config";
-import {FeatureFlagGuard} from "./app/feature-flag.guard";
+import {StrategyConfigService} from "./app/services/config.service";
+
 
 
 //bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
 
-function initializeAppFactory(featureToggleService: FeatureToggleService) {
-  return () => lastValueFrom(featureToggleService.loadFeatureFlags());
+function initializeAppFactory(configService: StrategyConfigService) {
+  return () => lastValueFrom(configService.loadStrategies());
 }
-
 bootstrapApplication(AppComponent, {providers: [
     provideHttpClient(),
     provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
-
-    FeatureFlagGuard,
     FeatureToggleService,
+    StrategyConfigService,
     {
       provide: APP_INITIALIZER,
       useFactory:  initializeAppFactory,
-      deps: [FeatureToggleService],
+      deps: [StrategyConfigService],
       multi: true
     }
 

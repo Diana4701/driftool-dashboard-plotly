@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AverageComponent } from './average.component';
+import { AverageStrategyComponent } from './average-strategy.component';
 
-describe('AverageComponent', () => {
-  let component: AverageComponent;
-  let fixture: ComponentFixture<AverageComponent>;
+describe('AverageStrategyComponent', () => {
+  let component: AverageStrategyComponent;
+  let fixture: ComponentFixture<AverageStrategyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AverageComponent]
+      imports: [AverageStrategyComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AverageComponent);
+    fixture = TestBed.createComponent(AverageStrategyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

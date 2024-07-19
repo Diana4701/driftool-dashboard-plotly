@@ -36,9 +36,10 @@ export class CsvDataService {
   // for the timeseries_different.csv
 
   loadData() {
-    this.http.get('/assets/timeseries_different.csv', { responseType: 'text' })
+    this.http.get('../assets/timeseries_different.csv', { responseType: 'text' })
       .subscribe(data => {
         const parsedData = this.parseCsvData(data);
+        console.log('Parsed CSV Data:', parsedData);
         this.dataSubject.next(parsedData);
       });
   }

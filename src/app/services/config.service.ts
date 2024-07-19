@@ -1,32 +1,34 @@
 import {Inject, Injectable} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import { HttpClientModule } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class StrategyConfigService {
 
-  private configUrl =  '../assets/configuration.json';
-  private configSubject = new BehaviorSubject<any>(null);
+
+  private configUrl = '../../assets/configuration.json';
+  private configSubject = new BehaviorSubject<any>([]);
   config$ = this.configSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.loadConfig();
+
+  }
+
+  loadStrategies(): Observable<any> {
+    return this.http.get<any>(this.configUrl).pipe(
+    tap(config => this.configSubject.next(config))
+    );
+  }
+
+  getStrategiesConfig(): Observable<any> {
+    return this.http.get<any>(this.configUrl);
   }
 
 
 
-  loadConfig() {
-    this.http.get(this.configUrl).subscribe(config => {
-      this.configSubject.next(config);
-    });
-  }
-
-  updateConfig(config: any) {
-    this.configSubject.next(config);
-  }
 
 
 }

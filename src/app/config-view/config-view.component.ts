@@ -6,11 +6,13 @@ import {FeatureToggleService} from "../services/feature-toggle.service";
 import {CsvDataService} from "../services/csv-data.service";
 import {Router} from "@angular/router";
 import {Configuration} from "../configuration";
-import {ConfigService} from "../services/config.service";
+
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {DashboardViewComponent} from "../dashboard-view/dashboard-view.component";
-import {TimeComponent} from "../features/time/time.component";
-import {FeatureFlagDirective} from "../feature-flag.directive";
+import {CheckboxState, ConfigSection} from "../models/toggles-models";
+import {StrategyContextService} from "../services/strategy-context.service";
+
+
 
 
 
@@ -22,119 +24,63 @@ import {FeatureFlagDirective} from "../feature-flag.directive";
     NgForOf,
     NgIf,
     HttpClientModule,
-    TimeComponent,
-    FeatureFlagDirective
+
   ],
-  providers: [ConfigService, CsvDataService, FeatureToggleService, HttpClientModule, HttpClient],
-  template: `
-    <h1>Feature Toggles</h1>
-    <div *ngFor="let category of categories">
-      <h2>{{ category }}</h2>
-      <div *ngFor="let feature of getFeatures(category)">
-        <label>
-          <input type="checkbox" [ngModel]="feature.enabled" (ngModelChange)="toggleFeature(category, feature.name, $event)" />
-          {{ feature.label }}
-        </label>
-       <!-- <div *ngIf="feature.name === 'last_week' && feature.enabled">-->
-         <!--  <div *appFeatureToggle="{category: 'time', name: 'last_week'}">
-          </div>-->
-         <!--<app-time></app-time>-->
-        </div>
-      </div>
-   <!-- </div>-->
-    <div class="navigation-buttons">
-     <!-- <button *appFeatureToggle="{category: 'time', name: 'last_week'}" (click)="onFeatureButtonClick()">Check Feature and Navigate</button>-->
-      <button (click)="navigateToDashboard()">Go to Dashboard</button>
-    </div>
-  `,
+  providers: [ CsvDataService, FeatureToggleService, HttpClientModule, HttpClient],
+  templateUrl: 'config-view.component.html',
   styleUrl: './config-view.component.css'
 })
-export class ConfigViewComponent implements OnInit, AfterViewInit{
- categories: string[] = [];
- features: any = {};
+export class ConfigViewComponent implements OnInit {
+  configSections: ConfigSection[] = [];
+  selectedConfig: { operation: string[], timePeriod: string } = { operation: [], timePeriod: '' };
+  checkboxState: CheckboxState = {};
 
-  constructor(private configService: ConfigService,
-              private featureToggleService: FeatureToggleService,
-              private router: Router) {}
+  constructor(private contextService: StrategyContextService, private router: Router) {}
 
- ngOnInit()
-  {
-    console.log('ConfigViewComponent ngOnInit called');
-   // this.featureToggleService.loadFeatureToggles().then(() => {
-    this.featureToggleService.loadFeatureFlags().subscribe(toggles => {
-      if (toggles) {
-        this.categories = Object.keys(toggles.features);
-        this.features = toggles.features;
+  ngOnInit() {
+    this.contextService.loadStrategies().subscribe(config => {
+      this.configSections = config;
+      this.initializeSelections();
+    });
+  }
+
+  initializeSelections() {
+    this.configSections.forEach(section => {
+      if (section.name === 'timePeriodOptions') {
+        this.selectedConfig.timePeriod = section.options[0].value; // Initialize first option as selected
+      } else {
+        section.options.forEach(option => {
+          this.checkboxState[option.value] = {
+            label: option.label,
+            value: option.value,
+            checked: false
+          };
+        });
       }
     });
   }
 
-  ngAfterViewInit() {
-    this.featureToggleService.featureToggles$.subscribe(toggles => {
-      if (toggles) {
-        this.categories = Object.keys(toggles.features);
-        this.features = toggles.features;
-      }
-    });
+  onSubmit() {
+    this.selectedConfig.operation = Object.keys(this.checkboxState)
+      .filter(key => this.checkboxState[key].checked);
+    this.contextService.setOperationConfig(this.selectedConfig);
+    this.router.navigate(['/dashboard']);
   }
 
-  getFeatures(category: string){
-    return this.features[category]|| [];
-
+  resetAllSettings() {
+    this.selectedConfig = { operation: [], timePeriod: '' };
+    this.checkboxState = {};
+    this.initializeSelections();
   }
 
-  toggleFeature(category: string, featureName: string, isEnabled: boolean){
-    console.log(`Toggling feature: ${featureName} in category: ${category} to ${isEnabled}`);
 
-    const feature = this.features[category].find((f: any) => f.name === featureName);
 
-    if (feature) {
-      feature.enabled = isEnabled;
-      this.featureToggleService.setFeatureFlag(`${category}.${featureName}`, isEnabled);
-      console.log(`Feature ${featureName} is now ${isEnabled ? 'enabled' : 'disabled'}`);
-     // this.navigateToDashboard();
-      //  if (category === 'time' && featureName === 'last_week' && isEnabled) {
-     //   this.router.navigate(['/time']);
-     // }
-    }
 
-  }
+
 
   navigateToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
-  navigateToConfig() {
-    this.router.navigate(['/config']);
-  }
-  isLastWeekFeatureEnabled(): boolean {
-    return this.features['time'].find((f: any) => f.name === 'last_week')?.enabled || false;
-  }
-
- /* onFeatureButtonClick() {
-    const directive = new FeatureFlagDirective(
-      null,
-      null,
-      this.featureToggleService,
-      this.router
-    );
-    directive.feature = { category: 'time', name: 'last_week' };
-    directive.handleButtonClick();
-  }*/
-
-
-  onConfigChange(feature: string, key: string, value: boolean) {
-   // this.featureToggleService.updateFeatureToggle(feature, key, value);
-    //console.log(`Feature toggle changed: ${feature}, ${key}, ${value}`);
-    if (feature === 'time' && value) {
-      this.router.navigate(['/']).then(success => {
-        if(success) {
-          console.log('Navigation successful');
-        } else {
-          console.error('Navigation to dashboard failed');
-        }
-      });
-    }
-  }
 
   }

@@ -1,36 +1,37 @@
-{
-  "features": {
-    "smoothing": {
-      "options": [
-        {
-          "name": "moving_average",
-          "enabled": false
-        },
-        {
-          "name": "exponential_smoothing",
-          "enabled": false
-        }
-      ]
-    },
-    "systematical_analysis": {
-      "options": [
-        {"name": "average", "enabled": false},
-        {"name": "median", "enabled": false},
-        {"name": "standard_deviation", "enabled": false}
-      ]
-    },
-    "comparison": {
-      "options": [
-        {"name": "week", "enabled": false},
-        {"name": "month", "enabled": false},
-        {"name": "day", "enabled": false}
-      ]
-    },
-    "time":{
-      "options": [
-        {"name": "last_week", "enabled":  false},
-        {"name":  "last_month", "enabled": false}
-      ]
-    }
+[
+  {
+    "name": "sd",
+    "label": "DRIFTOOL Output",
+    "options": [
+      {"value":  "sd", "label": "Show Statement Drift" }
+    ]
+  },
+  {
+    "name": "calculations",
+    "label": "Statistical Analysis ",
+    "options": [
+      { "value": "average", "label": "Show Average" },
+      { "value": "sum", "label": "Show Sum" },
+      { "value": "variance", "label": "Show Variance" },
+      { "value": "standard_deviation", "label": "Show Standard Deviation" }
+    ]
+  },
+  {
+    "name": "comparisonConfiguration",
+    "label": "Comparison Configuration",
+    "options": [
+      { "value": "comparison", "label": "Time Comparison" }
+    ]
+  },
+  {
+    "name": "timePeriodOptions",
+    "label": "Time Options",
+    "options": [
+      { "value": "last_three_days", "label": "Last 3 Days" },
+      { "value": "first_three_days", "label": "First 3 Days" },
+      { "value": "last_week", "label": "Last 7 Days" },
+      { "value": "all_weeks", "label": "All weeks" }
+
+    ]
   }
-}
+]

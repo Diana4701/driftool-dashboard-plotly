@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {DataItem} from "../../models/toggles-models";
 import {TimePeriodStrategy} from "../analysis-strategy";
 
@@ -6,6 +6,7 @@ import {TimePeriodStrategy} from "../analysis-strategy";
   selector: 'app-time-period-strategy',
   standalone: true,
   imports: [],
+  providers: [TimePeriodStrategyComponent],
   templateUrl: './time-period-strategy.component.html',
   styleUrl: './time-period-strategy.component.css'
 })

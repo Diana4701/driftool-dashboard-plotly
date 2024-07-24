@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Injectable, Input, OnChanges, ViewChild} from '@angular/core';
 import {AnalysisStrategy, TimePeriodStrategy} from "../analysis-strategy";
 import {DataItem} from "../../models/toggles-models";
 import {NgIf} from "@angular/common";
@@ -11,6 +11,7 @@ import {TimePeriodStrategyComponent} from "../time-period-strategy/time-period-s
   imports: [
     NgIf
   ],
+  providers: [SumStrategyComponent],
   templateUrl: './sum-strategy.component.html',
   styleUrl: './sum-strategy.component.css'
 })
@@ -20,7 +21,7 @@ export class SumStrategyComponent implements AnalysisStrategy, OnChanges, AfterV
   @Input() operation: string = '';
   @Input() timePeriod: string = '';
   result: number | null = null;
-  @ViewChild('plotContainer', { static: false }) plotContainer!: ElementRef;
+  @ViewChild('plotContainer', { static: true }) plotContainer!: ElementRef;
 
   private timePeriodStrategy: TimePeriodStrategyComponent = new TimePeriodStrategyComponent();
 

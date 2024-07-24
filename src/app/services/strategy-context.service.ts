@@ -1,13 +1,8 @@
-import {Injectable, OnInit} from '@angular/core';
+import { Injectable, Injector, Type } from '@angular/core';
 import {AnalysisStrategy} from "../strategies/analysis-strategy";
 
 import {SumStrategyComponent} from "../strategies/sum-strategy/sum-strategy.component";
-import {VarianceStrategyComponent} from "../strategies/variance-strategy/variance-strategy.component";
-import {
-  StandardDeviationStrategyComponent
-} from "../strategies/standard-deviation-strategy/standard-deviation-strategy.component";
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
-import {StrategyConfigService} from "./config.service";
 import {HttpClient} from "@angular/common/http";
 import {ConfigSection, DataItem} from "../models/toggles-models";
 import {AverageStrategyComponent} from "../strategies/average-strategy/average-strategy.component";
@@ -19,25 +14,20 @@ import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/ti
 export class StrategyContextService {
   private configUrl = '../assets/configuration.json';
   private configSubject = new BehaviorSubject<ConfigSection[]>([]);
-  config$ = this.configSubject.asObservable();
-  private operationConfigSubject = new BehaviorSubject<{operation: string[], timePeriod: string}>({operation: [], timePeriod: ''});
+  private operationConfigSubject = new BehaviorSubject<{ operation: string[], timePeriod: string }>({ operation: [], timePeriod: '' });
   operationConfig$ = this.operationConfigSubject.asObservable();
 
-
-
-  private strategyComponentMap: { [key: string]: any } = {
+  private strategyComponentMap: { [key: string]: Type<any> } = {
     sum: SumStrategyComponent,
     average: AverageStrategyComponent,
-    time: TimePeriodStrategyComponent
+    time: TimePeriodStrategyComponent,
   };
 
-
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient, private injector: Injector) {}
 
   loadStrategies(): Observable<ConfigSection[]> {
     return this.http.get<ConfigSection[]>(this.configUrl).pipe(
-      tap(config => this.configSubject.next(config))
+      tap(config => this.configSubject.next(config)),
     );
   }
 
@@ -49,20 +39,18 @@ export class StrategyContextService {
     return this.operationConfigSubject.value;
   }
 
-  getStrategyComponent(operation: string) {
-    return this.strategyComponentMap[operation];
+  getStrategyComponent(operation: string): Type<any> | null {
+    return this.strategyComponentMap[operation] || null;
   }
 
   public executeOperation(operation: string, data: DataItem[], timePeriod: string): number {
-    const strategyComponent = this.getStrategyComponent(operation);
-    if (strategyComponent) {
-      return strategyComponent.execute(data, timePeriod);
+    const strategyComponentType = this.getStrategyComponent(operation);
+    if (strategyComponentType) {
+      const strategyComponentInstance = new strategyComponentType(); // Manually create the instance
+      return strategyComponentInstance.execute(data, timePeriod);
     }
     return 0; // Default value if strategy is not found
   }
-
-
-
 }
 
 

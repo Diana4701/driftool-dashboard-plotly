@@ -1,12 +1,7 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component,  Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CsvDataService} from "../services/csv-data.service";
-import {FeatureToggleService} from "../services/feature-toggle.service";
-import {RepositoryData} from "../repository-data";
-import moment from 'moment';
-import * as Plotly from 'plotly.js-dist-min';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
 
-import {Configuration} from "../configuration";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgForOf, NgIf} from "@angular/common";
 
 import {Router} from "@angular/router";
@@ -27,7 +22,7 @@ import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/ti
     SumStrategyComponent,
 
   ],
-  providers: [CsvDataService, FeatureToggleService, HttpClient],
+  providers: [CsvDataService, HttpClient],
   templateUrl: 'dashboard-view.component.html',
   styleUrls: ['./dashboard-view.component.css']
 })
@@ -36,41 +31,47 @@ import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/ti
 export class DashboardViewComponent implements OnInit {
   data: DataItem[] = [];
   selectedConfig: { operation: string[], timePeriod: string } = { operation: [], timePeriod: '' };
-  @ViewChild('strategyContainer', { read: ViewContainerRef, static: true}) viewContainerRef!: ViewContainerRef;
-  private timePeriodStrategy: TimePeriodStrategy = new TimePeriodStrategyComponent();
+  @ViewChild('strategyContainer', { read: ViewContainerRef, static: true }) viewContainerRef!: ViewContainerRef;
+
   constructor(
     private operationContextService: StrategyContextService,
     private csvService: CsvDataService,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private injector: Injector
   ) {}
 
   ngOnInit() {
     this.operationContextService.operationConfig$.subscribe(config => {
       this.selectedConfig = config;
-     // this.loadStrategyComponents();
+      this.updateStrategyComponents();
     });
     this.csvService.data$.subscribe(data => {
       this.data = data;
-      this.loadStrategyComponents();
+      this.updateStrategyComponents();
     });
   }
 
-  loadStrategyComponents() {
-    this.viewContainerRef.clear();
+
+
+
+  updateStrategyComponents() {
+    this.viewContainerRef.clear(); // Clear existing components
+
     this.selectedConfig.operation.forEach(operation => {
-      const componentClass = this.operationContextService.getStrategyComponent(operation);
-      if (componentClass) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
-        const componentRef = this.viewContainerRef.createComponent(componentFactory);
-        const instance = componentRef.instance as AnalysisStrategy;
-        instance.data = this.data;
-        instance.operation = operation;
-        instance.timePeriod = this.selectedConfig.timePeriod;
+      // Execute operation using the service
+      const result = this.operationContextService.executeOperation(operation, this.data, this.selectedConfig.timePeriod);
+      console.log(`Result of ${operation}: ${result}`);
+
+      // Get the component type
+      const componentType = this.operationContextService.getStrategyComponent(operation);
+      if (componentType) {
+        const componentRef = this.viewContainerRef.createComponent(componentType);
+        (componentRef.instance as any).data = this.data;
+        (componentRef.instance as any).operation = operation;
+        (componentRef.instance as any).timePeriod = this.selectedConfig.timePeriod;
       }
     });
   }
-
   navigateToConfig() {
     this.router.navigate(['/config']);
   }

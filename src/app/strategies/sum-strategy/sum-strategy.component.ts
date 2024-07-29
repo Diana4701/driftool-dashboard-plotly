@@ -37,8 +37,7 @@ export class SumStrategyComponent implements AnalysisStrategy, OnChanges, AfterV
     // Ensure plot renders after view initialization
     if (this.data && this.data.length > 0 && this.operation === 'sum') {
       const filteredData = this.timePeriodStrategy.execute(this.data, this.timePeriod);
-      this.plot(filteredData, this.timePeriod);
-    }
+      this.plot(filteredData, this.timePeriod)}
   }
 
   execute(data: DataItem[]): number {

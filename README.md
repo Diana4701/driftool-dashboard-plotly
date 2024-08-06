@@ -16,14 +16,14 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Installation
 ### Clone the repository:
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+`git clone https://github.com/yourusername/your-repo-name.git`
+`cd your-repo-name`
 ### Install dependencies: 
-npm install
+`npm install`
 ### Run the development server:
-ng serve
+`ng serve`
 
-Navigate to http://localhost:4200/ in your browser to see the application running.
+Navigate to `http://localhost:4200/` in your browser to see the application running.
 
 ## Build
 

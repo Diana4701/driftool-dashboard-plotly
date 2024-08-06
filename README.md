@@ -23,7 +23,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ### Run the development server:
 `ng serve`
 
-Navigate to `http://localhost:4200/` in your browser to see the application running.
 
 ## Build
 

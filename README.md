@@ -4,6 +4,7 @@
 # DashboardPlotlyProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+This project is an Angular-based dashboard application that uses Plotly.js for dynamic and interactive data visualizations. It provides a foundation for creating complex data visualizations within an Angular application, including line charts, bar charts, scatter plots, and more.
 
 ## Development server
 
@@ -12,6 +13,17 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Installation
+### Clone the repository:
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+### Install dependencies: 
+npm install
+### Run the development server:
+ng serve
+
+Navigate to http://localhost:4200/ in your browser to see the application running.
 
 ## Build
 

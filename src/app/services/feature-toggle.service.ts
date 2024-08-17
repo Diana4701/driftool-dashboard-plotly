@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CheckboxOption, CheckboxState, ConfigSection } from '../models/model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CheckboxService {
+export class FeatureToggleService {
   private localStorageKey = 'checkboxesState';
   private sessionStorageKey = 'checkboxesStateSession';
   private checkboxesSubject = new BehaviorSubject<CheckboxState>({});
   checkboxes$ = this.checkboxesSubject.asObservable();
+
+  private configSubject = new BehaviorSubject<ConfigSection[]>([]);
+  config$ = this.configSubject.asObservable();
 
   private defaultViewSubject = new BehaviorSubject<string>(''); // BehaviorSubject for default view
   defaultView$ = this.defaultViewSubject.asObservable(); // Observable to subscribe to default view changes
@@ -20,9 +23,15 @@ export class CheckboxService {
 
   constructor(private http: HttpClient) {
     this.initializeState();
+    this.loadConfig();
   }
 
 
+  loadConfig() {
+    this.http.get<ConfigSection[]>('../assets/checkboxes.json').subscribe(config => {
+      this.configSubject.next(config);
+    });
+  }
   setCheckboxes(checkboxes: CheckboxState) {
     this.checkboxesSubject.next(checkboxes);
     this.persistState(checkboxes);
@@ -40,9 +49,6 @@ export class CheckboxService {
     return this.selectedTimePeriodSubject.value;
   }
 
-  loadCheckboxes(): Observable<ConfigSection[]> {
-    return this.http.get<ConfigSection[]>('../assets/checkboxes.json');
-  }
 
   resetCheckboxes() {
     const resetState: CheckboxState = {};
@@ -62,7 +68,7 @@ export class CheckboxService {
     if (!timePeriodSelected) {
       return { isValid: false, message: 'Please select a time period.' };
     }
-    if (selectedCheckboxes > 4) {
+    if (selectedCheckboxes >= 4) {
       return { isValid: false, message: 'You can select a maximum of 3 checkboxes.' };
     }
     return { isValid: true, message: '' };
@@ -84,10 +90,10 @@ export class CheckboxService {
     this.setDefaultView();
   }
 
-   setDefaultView() {
-    // Logic to determine and set default view based on checkboxes or other criteria
-    // For example, you can set it to 'dashboard' if no checkboxes are selected
-    const defaultView = Object.keys(this.checkboxesSubject.value).length === 0 ? 'dashboard' : '';
+
+  setDefaultView() {
+    const checkboxes = this.checkboxesSubject.value;
+    const defaultView = Object.keys(checkboxes).length === 0 ? 'dashboard' : '';
     this.defaultViewSubject.next(defaultView);
   }
 }

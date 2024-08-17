@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CheckboxService } from '../services/feature-toggle.service';
+import { FeatureToggleService } from '../services/feature-toggle.service';
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
@@ -26,10 +26,10 @@ export class ConfigViewComponent implements OnInit {
   validationMessage: string = '';
   isValid: boolean = false;
 
-  constructor(private router: Router, private checkboxService: CheckboxService) {}
+  constructor(private router: Router, private checkboxService: FeatureToggleService) {}
 
   ngOnInit() {
-    this.checkboxService.loadCheckboxes().subscribe((data: ConfigSection[]) => {
+    this.checkboxService.config$.subscribe((data: ConfigSection[]) => {
       this.configSections = data;
       this.initializeCheckboxes();
       this.updateValidation();
@@ -45,6 +45,7 @@ export class ConfigViewComponent implements OnInit {
           this.checkboxes[option.value] = {
             value: option.value,
             label: option.label,
+            operation: option.value,
             checked: persistedCheckboxes[option.value]?.checked || false
           };
         }

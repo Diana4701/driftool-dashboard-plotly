@@ -4,13 +4,13 @@ import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/h
 
 import { routes } from './app.routes';
 import {FeatureFlagGuard} from "./feature-flag.guard";
-import {CheckboxService} from "./services/feature-toggle.service";
+import {FeatureToggleService} from "./services/feature-toggle.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     importProvidersFrom(HttpClientModule, HttpClient),
 
     FeatureFlagGuard,
-    CheckboxService,
+    FeatureToggleService,
     ]
 };

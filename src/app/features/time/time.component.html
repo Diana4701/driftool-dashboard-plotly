@@ -4,11 +4,17 @@
   </div>
 
   <div *ngIf="operation === 'average'" class="plot-wrapper">
-    <app-average [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod" [timePeriodLabels]="timePeriodLabels"></app-average>
+    <app-average [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod" ></app-average>
   </div>
 
   <div *ngIf="operation === 'standard_deviation'" class="plot-wrapper">
     <app-deviation [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod"></app-deviation>
   </div>
+
+  <div *ngIf="operation === 'sd'" class="plot-wrapper">
+    <app-drift [data]="lastTimePeriodData$ | async" [timePeriod]="timePeriod"></app-drift>
+  </div>
+
+
 
 </div>

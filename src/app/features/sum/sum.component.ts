@@ -14,7 +14,6 @@ export class SumComponent implements OnInit, OnChanges {
   @Input() operation!: string;
 
   ngOnInit() {
-    console.log('Time Period:', this.timePeriod);
     this.plotData();
   }
 

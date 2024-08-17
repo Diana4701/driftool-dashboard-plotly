@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VarianceComponent } from './variance.component';
+import { DriftComponent } from './drift.component';
 
 describe('VarianceComponent', () => {
-  let component: VarianceComponent;
-  let fixture: ComponentFixture<VarianceComponent>;
+  let component: DriftComponent;
+  let fixture: ComponentFixture<DriftComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VarianceComponent]
+      imports: [DriftComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(VarianceComponent);
+
+    fixture = TestBed.createComponent(DriftComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

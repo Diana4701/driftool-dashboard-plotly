@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 @Component({
-  selector: 'app-variance',
+  selector: 'app-drift',
   standalone: true,
   imports: [],
-  templateUrl: './variance.component.html',
-  styleUrl: './variance.component.css'
+  templateUrl: './drift.component.html',
+  styleUrl: './drift.component.css'
 })
-export class VarianceComponent implements OnInit{
+export class DriftComponent implements OnInit{
   @Input() data: any;
   @Input() timePeriod!: string;
   @Input() operation!: string;
@@ -38,7 +38,7 @@ export class VarianceComponent implements OnInit{
     });
 
     const layout = {
-      title: `DRIFTOOL Time Series over ${this.timePeriod}`,
+      title: `DRIFT Time Series over ${this.timePeriod}`,
       xaxis: {
         title: `${this.timePeriod}`
       },

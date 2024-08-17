@@ -7,13 +7,13 @@ import {
   Router,
   RouterStateSnapshot, UrlTree
 } from "@angular/router";
-import {CheckboxService} from "./services/feature-toggle.service";
+import {FeatureToggleService} from "./services/feature-toggle.service";
 
 @Injectable()
 
 export class FeatureFlagGuard {
   constructor(
-    private featureToggleService: CheckboxService,
+    private featureToggleService: FeatureToggleService,
     private router: Router
   ) {
 

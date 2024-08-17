@@ -8,7 +8,6 @@ import * as Plotly from 'plotly.js-dist-min';
   styleUrl: './deviation.component.css'
 })
 export class DeviationComponent implements OnInit, OnChanges{
-
   @Input() data: any;
   @Input() timePeriod!: string;
   @Input() operation!: string;
@@ -21,8 +20,12 @@ export class DeviationComponent implements OnInit, OnChanges{
     this.plotData();
   }
 
-  calculateSum(data: any[]): number {
-    return data.reduce((sum, item) => sum + parseFloat(item.value), 0);
+  // Method to calculate standard deviation
+  calculateStandardDeviation(data: any[]): number {
+    const n = data.length;
+    const mean = data.reduce((sum, item) => sum + parseFloat(item.value), 0) / n;
+    const variance = data.reduce((sum, item) => sum + Math.pow(parseFloat(item.value) - mean, 2), 0) / n;
+    return Math.sqrt(variance);
   }
 
   plotData() {
@@ -32,13 +35,14 @@ export class DeviationComponent implements OnInit, OnChanges{
     Object.keys(groupedData).forEach(repository => {
       const repoData = groupedData[repository];
       const timestamps = repoData.map(item => item.timestamp);
-      const values = repoData.map(item => parseFloat(item.value));
 
-      const result = this.calculateSum(repoData);
+      // Calculate standard deviation instead of sum
+      const stdDev = this.calculateStandardDeviation(repoData);
+      const stdDevValues = repoData.map(() => stdDev);
 
       traces.push({
         x: timestamps,
-        y: values,
+        y: stdDevValues,
         type: 'scatter',
         mode: 'lines',
         name: repository,
@@ -47,12 +51,12 @@ export class DeviationComponent implements OnInit, OnChanges{
     });
 
     const layout = {
-      title: `Statement Drift over ${this.timePeriod}`,
+      title: `Standard deviation over ${this.timePeriod}`,
       xaxis: {
         title: 'Date'
       },
       yaxis: {
-        title: 'Statement Drift'
+        title: 'Standard Deviation of Statement Drift'
       }
     };
 
@@ -68,6 +72,5 @@ export class DeviationComponent implements OnInit, OnChanges{
       return acc;
     }, {} as { [key: string]: any[] });
   }
-
 
 }

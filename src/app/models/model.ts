@@ -4,13 +4,19 @@ export interface ConfigSection {
   options: CheckboxOption[];
 }
 export interface CheckboxOption {
+  operation: string;
   value: string;
   label: string;
   disabled?: boolean;
 }
 
 export interface CheckboxState {
- [key: string]: { label: string; value: string; checked: boolean };
+  [key: string]: {
+    operation: string;
+    label: string;
+    value: string;
+    checked: boolean;
+  };
 }
 
 export interface DataItem {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CheckboxOption, CheckboxState, ConfigSection } from '../models/model';
+import {ConfigService} from "./config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +22,14 @@ export class FeatureToggleService {
   private selectedTimePeriodSubject = new BehaviorSubject<string | null>(null);
   selectedTimePeriod$ = this.selectedTimePeriodSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private configService: ConfigService) {
     this.initializeState();
     this.loadConfig();
   }
 
 
   loadConfig() {
-    this.http.get<ConfigSection[]>('../assets/checkboxes.json').subscribe(config => {
+    this.configService.config$.subscribe(config => {
       this.configSubject.next(config);
     });
   }
@@ -49,6 +50,18 @@ export class FeatureToggleService {
     return this.selectedTimePeriodSubject.value;
   }
 
+  getCheckedFeatures(): Observable<CheckboxOption[]> {
+    return this.checkboxes$.pipe(
+      map(checkboxes => Object.keys(checkboxes)
+        .filter(key => checkboxes[key].checked)
+        .map(key => ({
+          label: checkboxes[key].label,
+          value: key,
+          operation: checkboxes[key].operation
+        }))
+      )
+    );
+  }
 
   resetCheckboxes() {
     const resetState: CheckboxState = {};
@@ -68,7 +81,7 @@ export class FeatureToggleService {
     if (!timePeriodSelected) {
       return { isValid: false, message: 'Please select a time period.' };
     }
-    if (selectedCheckboxes >= 4) {
+    if (selectedCheckboxes > 4) {
       return { isValid: false, message: 'You can select a maximum of 3 checkboxes.' };
     }
     return { isValid: true, message: '' };

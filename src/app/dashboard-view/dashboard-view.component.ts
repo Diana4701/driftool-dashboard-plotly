@@ -1,5 +1,5 @@
-// dashboard-view.component.ts
-import {Component, Input, OnInit} from '@angular/core';
+
+import {Component, OnInit} from '@angular/core';
 import { FeatureToggleService } from '../services/feature-toggle.service';
 import { Router } from "@angular/router";
 import {CheckboxState, CheckboxOption, DataItem} from '../models/model';
@@ -23,16 +23,17 @@ export class DashboardViewComponent implements OnInit {
   data: DataItem[] = [];
   defaultView: string = '';
   selectedTimePeriod: string | null = '';
-  constructor(private checkboxService: FeatureToggleService,
+  constructor(private featuresService: FeatureToggleService,
               private router: Router,
               private csvService: CsvDataService
   ) {}
 
   ngOnInit() {
-    this.checkboxService.checkboxes$.subscribe((data: CheckboxState) => {
+    this.featuresService.checkboxes$.subscribe((data: CheckboxState) => {
       this.checkboxes = data;
-      this.updateCheckedCheckboxes();
-      this.updateDefaultView();
+    });
+    this.featuresService.getCheckedFeatures().subscribe(checkedCheckboxes => {
+      this.checkedCheckboxes = checkedCheckboxes;
     });
 
     this.csvService.data$.subscribe((data: DataItem[]) => {
@@ -40,38 +41,13 @@ export class DashboardViewComponent implements OnInit {
     });
 
 
-    this.checkboxService.defaultView$.subscribe(view => {
-      this.defaultView = view; // Update default view when it changes
-    });
-
-    this.checkboxService.selectedTimePeriod$.subscribe((timePeriod) => {
+    this.featuresService.selectedTimePeriod$.subscribe((timePeriod) => {
       this.selectedTimePeriod = timePeriod;
     });
 
 
   }
 
-
-  updateCheckedCheckboxes() {
-    this.checkedCheckboxes = Object.keys(this.checkboxes)
-      .filter(key => this.checkboxes[key].checked)
-      .map(key => {
-        console.log(`Checkbox Key: ${key}, Value: ${this.checkboxes[key].value}, Operation: ${this.checkboxes[key].operation}`);
-        return {
-          label: this.checkboxes[key].label,
-          value: key,
-          operation: this.checkboxes[key].operation
-        };
-      });
-  }
-
-  updateDefaultView() {
-    if (Object.values(this.checkboxes).some(checkbox => checkbox.checked)) {
-      this.defaultView = ''; // Or some other appropriate value
-    } else {
-      this.defaultView = 'dashboard'; // Show default view if no checkboxes selected
-    }
-  }
 
 
   isSelected(name: string): boolean {

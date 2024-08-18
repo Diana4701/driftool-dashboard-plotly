@@ -34,44 +34,28 @@ export class TimeComponent implements OnInit, OnChanges {
   constructor(private dataService: CsvDataService) {}
 
   ngOnInit() {
-    // Debugging statements to check inputs
-    console.log('Operation Input:', this.operation);
-    console.log('Time Period Input:', this.timePeriod);
-
 this.updateData();
-
-    // Subscribe to data and filter it based on the provided timePeriod
-   /* this.dataService.data$
-      .pipe(filter(data => !!data)) // Filter out undefined or null data
-      .subscribe(data => {
-        console.log('Received Data:', data); // Debugging statement
-        const filteredData = this.getTimePeriodData(data, this.timePeriod);
-        this.lastTimePeriodData$.next(filteredData);
-      });*/
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['timePeriod'] || changes['operation']) {
-      console.log('Operation Input:', this.operation);
-      console.log('Time Period Input:', this.timePeriod);
       this.updateData();
     }
   }
 
   updateData() {
     this.dataService.data$
-      .pipe(filter(data => !!data)) // Filter out undefined or null data
+      .pipe(filter(data => !!data))
       .subscribe(data => {
         const filteredData = this.getTimePeriodData(data, this.timePeriod);
         this.lastTimePeriodData$.next(filteredData);
-        // Optionally, update additional state or trigger additional logic
+
       });
   }
   getTimePeriodData(data: DataItem[], period: string): DataItem[] {
-    console.log('Filtering Data for Period:', period); // Debugging statement
 
     if (!data || data.length === 0) {
-      return []; // Handle empty data gracefully
+      return [];
     }
 
     const repositories = Array.from(new Set(data.map(item => item.repository)));
@@ -83,20 +67,19 @@ this.updateData();
 
       switch (period) {
         case 'last_three_days':
-          filteredData.push(...repoData.slice(-3)); // Corrected to push the first three items
+          filteredData.push(...repoData.slice(-3));
           break;
         case 'first_three_days':
-          filteredData.push(...repoData.slice(0,3)); // Pushes the last three items
+          filteredData.push(...repoData.slice(0,3));
           break;
         case 'last_week':
-          filteredData.push(...repoData.slice(-5)); // Pushes the last seven items
+          filteredData.push(...repoData.slice(-5));
           break;
         default:
-          filteredData.push(...repoData.slice(-3)); // Default to last three days
+          filteredData.push(...repoData.slice(-3));
           break;
       }
     });
-    console.log('Filtered Data:', filteredData); // Debugging statement
     return filteredData;
   }
 }

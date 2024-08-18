@@ -3,7 +3,7 @@ import { FeatureToggleService } from '../services/feature-toggle.service';
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {CheckboxState, CheckboxOption, ConfigSection} from "../models/model";
+import {CheckboxState, ConfigSection} from "../models/model";
 
 
 
@@ -61,7 +61,6 @@ export class ConfigViewComponent implements OnInit {
     if (validation.isValid) {
       this.checkboxService.setCheckboxes(this.checkboxes);
       this.checkboxService.setSelectedTimePeriod(this.selectedTimePeriod);
-      console.log('selected time period:', this.selectedTimePeriod);
      if (this.selectedTimePeriod) {
         Object.keys(this.checkboxes).forEach(key => {
           if (this.configSections.find(section => section.name === 'timePeriodOptions')?.options.find(option => option.value === key)) {

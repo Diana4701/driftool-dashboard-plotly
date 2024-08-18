@@ -11,7 +11,7 @@ import {FeatureFlagGuard} from "./app/feature-flag.guard";
 import {ConfigService} from "./app/services/config.service";
 
 
-//bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
+
 
 function initializeAppFactory(configService: ConfigService) {
   return () => lastValueFrom(configService.loadConfig());

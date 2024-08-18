@@ -47,7 +47,7 @@ export class DriftComponent implements OnInit{
       }
     };
 
-    Plotly.newPlot('chart-values', traces, layout);
+    Plotly.newPlot('chart-drift', traces, layout);
   }
 
   groupDataByRepository(data: any[]): { [key: string]: any[] } {

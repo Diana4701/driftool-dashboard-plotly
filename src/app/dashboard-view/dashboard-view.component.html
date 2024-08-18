@@ -3,20 +3,6 @@
   <h2>Dashboard</h2>
   </header>
 
-
- <!-- <div class="default-view" *ngIf="defaultView === 'dashboard'">
-    <p>No checkboxes selected. Please go to the Settings panel and select the desired configuration.</p>
-  </div>
-  <button class="btn btn-dashboard" (click)="navigateToConfig()">Set Configuration</button>
--->
- <!--<div *ngIf="checkedCheckboxes.length > 0">
-     <h3>Checked Checkboxes:</h3>
-     <ul>
-       <li *ngFor="let checkbox of checkedCheckboxes">
-         {{ checkbox.label }} - {{ checkbox.value }}
-       </li>
-     </ul>
-   </div> -->
   <div *ngIf="checkedCheckboxes.length === 0">
      <p>No checkboxes selected. Please go to the Settings panel and select the desired configuration.</p>
    </div>
@@ -30,20 +16,6 @@
     'two-graphs': checkedCheckboxes.length === 2,
     'three-graphs': checkedCheckboxes.length === 3
   }">
-   <!-- <app-time-period *ngIf="isSelected('last_three_days') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'last_three_days'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('average')"  [operation]="'average'" [timePeriod]="'last_three_days'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('standard_deviation')" [operation]="'standard_deviation'" [timePeriod]="'last_three_days'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_three_days') && isSelected('sd')" [operation]="'sd'" [timePeriod]="'last_three_days'"></app-time-period>
-
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'first_three_days'"></app-time-period>
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('average')"  [operation]="'average'" [timePeriod]="'first_three_days'"></app-time-period>
-    <app-time-period *ngIf="isSelected('first_three_days') && isSelected('standard_deviation')"  [operation]="'standard_deviation'" [timePeriod]="'first_three_days'"></app-time-period>
-
-    <app-time-period *ngIf="isSelected('last_week') && isSelected('sum')"  [operation]="'sum'" [timePeriod]="'last_week'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_week') && isSelected('average')"  [operation]="'average'" [timePeriod]="'last_week'"></app-time-period>
-    <app-time-period *ngIf="isSelected('last_week') && isSelected('standard_deviation')"  [operation]="'standard_deviation'" [timePeriod]="'last_week'"></app-time-period>
--->
-
 
 
     <app-time-period  *ngIf="isSelected('sum') && selectedTimePeriod"
@@ -53,6 +25,8 @@
     <app-time-period *ngIf="isSelected('average') && selectedTimePeriod"
        [operation]="'average'" [timePeriod]="selectedTimePeriod"></app-time-period>
 
+    <app-time-period *ngIf="isSelected('sd') && selectedTimePeriod"
+                     [operation]="'sd'" [timePeriod]="selectedTimePeriod"></app-time-period>
 
 
 </div>

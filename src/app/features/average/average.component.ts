@@ -1,6 +1,5 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
-import {DataItem, CheckboxOption} from "../../models/model";
 import {ChartService} from "../../services/chart-service.service";
 
 @Component({
@@ -16,8 +15,6 @@ export class AverageComponent implements AfterViewInit, OnChanges {
   @Input() timePeriodLabels: { [key: string]: string } = {};
   @ViewChild('chartAverage') chartAverage!: ElementRef;
 
- chartId: string = 'chart-average';
-  zoomEnabled: boolean = true;
 
   constructor(private chartService: ChartService) { }
 
@@ -59,13 +56,10 @@ export class AverageComponent implements AfterViewInit, OnChanges {
       pan: true,
     };
 
-    await this.chartService.createChart(this.chartAverage.nativeElement.id, traces, layout, config);
-  }
+    await this.chartService.createChart("'chart-average'", traces, layout, config);  }
 
   toggleZoom() {
-    this.zoomEnabled = !this.zoomEnabled;
-    this.chartService.toggleZoom(this.chartAverage.nativeElement.id, this.zoomEnabled);
-  }
+    this.chartService.toggleZoom(this.chartAverage.nativeElement.id);  }
 
   private groupDataByRepository(data: any[]): { [key: string]: any[] } {
     return data.reduce((acc, item) => {

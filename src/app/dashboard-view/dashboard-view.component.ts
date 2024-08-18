@@ -49,7 +49,6 @@ export class DashboardViewComponent implements OnInit {
   }
 
 
-
   isSelected(name: string): boolean {
     return this.checkboxes[name]?.checked;
   }

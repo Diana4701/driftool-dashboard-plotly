@@ -1,9 +1,22 @@
 
 # driftool-dashboard-plotly
 
-# DashboardPlotlyProject
+# Dynamic Dashboard with Feature Flags Approach
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The dashboard leverages a feature flags approach to enable and disable certain functionalities dynamically based on configuration settings.
+
+### Current Status
+
+Due to time constraints, only a subset of the intended features has been implemented and is functional. The features currently available are:
+
+- **Last Three Days Analysis:** The dashboard supports displaying data for the last three days.
+- **Last Five Days Analysis:** The dashboard supports displaying data for the last five days.
+- **Sum Values:** The sum of specific data points is calculated and displayed.
+- **Average Values:** The average of selected data metrics is calculated and visualized.
+- **Original Statement Drift Values:** The dashboard can show the original statement drift values from the `driftool` features.
+
+These functionalities represent the core capabilities of the dashboard, with plans for further features to be added or toggled using the feature flags system in future iterations.
+
 
 ## Development server
 

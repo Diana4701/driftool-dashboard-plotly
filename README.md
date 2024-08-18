@@ -3,8 +3,8 @@
 
 # Dynamic Dashboard with Feature Flags Approach
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The dashboard leverages a feature flags approach to enable and disable certain functionalities dynamically based on configuration settings.
-
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The feature-oriented dashboard leverages a feature flags approach to enable and disable certain functionalities dynamically based on configuration settings.  
+To validate the concept, a prototype dashboard has been developed using modern web technologies. The prototype implements the core features described above, focusing on the drift metric. Users can toggle between different features, allowing them to see how the dashboard can be configured to meet their specific needs. The prototype demonstrates how the initially defined user stories can be fulfilled, providing a solid foundation for future development.
 ### Current Status
 
 Due to time constraints, only a subset of the intended features has been implemented and is functional. The features currently available are:
@@ -17,6 +17,23 @@ Due to time constraints, only a subset of the intended features has been impleme
 
 These functionalities represent the core capabilities of the dashboard, with plans for further features to be added or toggled using the feature flags system in future iterations.
 
+### Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+1. **Node.js and npm**:
+   - Install the latest stable version of Node.js from the [official Node.js website](https://nodejs.org/).
+   - npm is included with Node.js, so it will be installed automatically.
+
+2. **Angular CLI**:
+   - Install Angular CLI globally using npm by running the following command:
+
+   ```sh
+   npm install -g @angular/cli
+
+3. **Install Plotly**
+   - This project uses Plotly for charting, install it with:
+   npm install plotly.js-dist-min --save
 
 ## Development server
 

@@ -14,8 +14,17 @@ Due to time constraints, only a subset of the intended features has been impleme
 - **Sum Values:** The sum of specific data points is calculated and displayed.
 - **Average Values:** The average of selected data metrics is calculated and visualized.
 - **Original Statement Drift Values:** The dashboard can show the original statement drift values from the `driftool` features.
+- **Constraints:** All predefined constraints have been fully implemented.
 
 These functionalities represent the core capabilities of the dashboard, with plans for further features to be added or toggled using the feature flags system in future iterations.
+
+## How to Use
+
+1. **Configuration**: Users can configure the data and strategy components via the configuration view. This includes setting up data and choosing whether to calculate the sum or average of the data.
+
+2. **Viewing Data**: Navigate to the dashboard view to see the resulting charts based on the selected strategy and configuration.
+
+3. **Resetting Settings**: Use the reset functionality to clear all selected settings and return to the default configuration.
 
 ### Prerequisites
 

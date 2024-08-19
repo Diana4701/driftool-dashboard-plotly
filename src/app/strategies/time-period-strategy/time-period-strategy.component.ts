@@ -17,7 +17,7 @@ export class TimePeriodStrategyComponent implements TimePeriodStrategy {
 
   getTimePeriodData(data: DataItem[], period: string): DataItem[] {
     if (!data || data.length === 0) {
-      return []; // Handle empty data gracefully
+      return [];
     }
 
     const repositories = Array.from(new Set(data.map(item => item.repository)));
@@ -29,19 +29,19 @@ export class TimePeriodStrategyComponent implements TimePeriodStrategy {
 
       switch (period) {
         case 'last_three_days':
-          filteredData.push(...repoData.slice(-3)); // Pushes the last three items
+          filteredData.push(...repoData.slice(-3));
           break;
         case 'first_three_days':
-          filteredData.push(...repoData.slice(0, 3)); // Pushes the first three items
+          filteredData.push(...repoData.slice(0, 3));
           break;
         case 'last_week':
-          filteredData.push(...repoData.slice(-7)); // Pushes the last seven items
+          filteredData.push(...repoData.slice(-7));
           break;
         case 'all_weeks':
-          filteredData.push(...repoData); // Pushes the last seven items
+          filteredData.push(...repoData);
           break;
         default:
-          filteredData.push(...repoData); // Default to all weeks
+          filteredData.push(...repoData);
           break;
       }
     });

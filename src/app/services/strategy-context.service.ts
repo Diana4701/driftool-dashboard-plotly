@@ -1,8 +1,6 @@
-import { Injectable, Injector, Type } from '@angular/core';
-import {AnalysisStrategy} from "../strategies/analysis-strategy";
-
+import { Injectable, Type } from '@angular/core';
 import {SumStrategyComponent} from "../strategies/sum-strategy/sum-strategy.component";
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ConfigSection, DataItem} from "../models/toggles-models";
 import {AverageStrategyComponent} from "../strategies/average-strategy/average-strategy.component";
@@ -23,7 +21,7 @@ export class StrategyContextService {
     time: TimePeriodStrategyComponent,
   };
 
-  constructor(private http: HttpClient, private injector: Injector) {}
+  constructor(private http: HttpClient) {}
 
   loadStrategies(): Observable<ConfigSection[]> {
     return this.http.get<ConfigSection[]>(this.configUrl).pipe(

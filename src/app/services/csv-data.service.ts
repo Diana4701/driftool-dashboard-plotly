@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Papa} from 'ngx-papaparse';
 import {HttpClient} from "@angular/common/http";
-import {RepositoryData} from "../repository-data";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
@@ -15,25 +14,6 @@ export class CsvDataService {
     this.loadData();
   }
 
-  /*loadData(csvFile: string) {
-    return new Promise<RepositoryData[]>((resolve, reject) => {
-      this.http.get(csvFile, {responseType: 'text'}).subscribe(
-        (csvData) => {
-          this.papa.parse(csvData, {
-            header: true,
-            delimiter: ';',
-            complete: (result) => {
-              this.data = result.data;
-              resolve(this.data)
-            }
-          })
-        });
-    });
-  }*/
-
-
-
-  // for the timeseries_different.csv
 
   loadData() {
     this.http.get('../assets/timeseries_different.csv', { responseType: 'text' })

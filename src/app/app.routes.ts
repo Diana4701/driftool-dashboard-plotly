@@ -1,11 +1,9 @@
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {ConfigViewComponent} from "./config-view/config-view.component";
 import {DashboardViewComponent} from "./dashboard-view/dashboard-view.component";
 
 
-import {NgModule} from "@angular/core";
 
-let DashboardComponent;
 export const routes: Routes = [
   { path: '', redirectTo: '/config', pathMatch: 'full' },
   { path: 'config', component: ConfigViewComponent },

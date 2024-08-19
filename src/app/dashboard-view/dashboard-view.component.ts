@@ -1,15 +1,11 @@
-import {Component,  Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CsvDataService} from "../services/csv-data.service";
-
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgForOf, NgIf} from "@angular/common";
-
 import {Router} from "@angular/router";
-import {CheckboxState, DataItem} from "../models/toggles-models";
+import {DataItem} from "../models/toggles-models";
 import {StrategyContextService} from "../services/strategy-context.service";
 import {SumStrategyComponent} from "../strategies/sum-strategy/sum-strategy.component";
-import {AnalysisStrategy, TimePeriodStrategy} from "../strategies/analysis-strategy";
-import {TimePeriodStrategyComponent} from "../strategies/time-period-strategy/time-period-strategy.component";
 
 
 @Component({
@@ -36,8 +32,7 @@ export class DashboardViewComponent implements OnInit {
   constructor(
     private operationContextService: StrategyContextService,
     private csvService: CsvDataService,
-    private router: Router,
-    private injector: Injector
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,11 +53,7 @@ export class DashboardViewComponent implements OnInit {
     this.viewContainerRef.clear(); // Clear existing components
 
     this.selectedConfig.operation.forEach(operation => {
-      // Execute operation using the service
       const result = this.operationContextService.executeOperation(operation, this.data, this.selectedConfig.timePeriod);
-      console.log(`Result of ${operation}: ${result}`);
-
-      // Get the component type
       const componentType = this.operationContextService.getStrategyComponent(operation);
       if (componentType) {
         const componentRef = this.viewContainerRef.createComponent(componentType);

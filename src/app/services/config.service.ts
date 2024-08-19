@@ -23,9 +23,6 @@ export class StrategyConfigService {
     );
   }
 
-  getStrategiesConfig(): Observable<any> {
-    return this.http.get<any>(this.configUrl);
-  }
 
 
 

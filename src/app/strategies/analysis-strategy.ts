@@ -1,4 +1,4 @@
-import {CheckboxState, DataItem} from "../models/toggles-models";
+import { DataItem} from "../models/toggles-models";
 
 export interface AnalysisStrategy {
   data: DataItem[];

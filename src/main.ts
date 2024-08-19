@@ -1,12 +1,10 @@
 import {bootstrapApplication} from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import {APP_INITIALIZER, enableProdMode, importProvidersFrom} from "@angular/core";
-import {provideRouter, RouterModule} from "@angular/router";
+import {APP_INITIALIZER, importProvidersFrom} from "@angular/core";
+import {provideRouter} from "@angular/router";
 import {routes} from "./app/app.routes";
 import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/http";
-import {FeatureToggleService} from "./app/services/feature-toggle.service";
 import {lastValueFrom, tap} from "rxjs";
-import {appConfig} from "./app/app.config";
 import {StrategyConfigService} from "./app/services/config.service";
 
 

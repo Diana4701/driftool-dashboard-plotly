@@ -8,9 +8,6 @@ import {CheckboxState, ConfigSection} from "../models/toggles-models";
 import {StrategyContextService} from "../services/strategy-context.service";
 
 
-
-
-
 @Component({
   selector: 'app-configuration-view',
   standalone: true,
@@ -32,17 +29,6 @@ export class ConfigViewComponent implements OnInit {
 
   constructor(private contextService: StrategyContextService, private router: Router) {}
 
-  /*ngOnInit() {
-    // Load config sections and initialize selectedConfig
-    this.contextService.loadStrategies().subscribe(config => {
-      this.configSections = config;
-      this.initializeSelections();
-    });
-    const savedConfig = this.contextService.getOperationConfig();
-    this.selectedOperations = savedConfig.operation;
-    this.selectedTimePeriod = savedConfig.timePeriod;
-  }*/
-
   ngOnInit() {
     // Load config sections and initialize selections
     this.contextService.loadStrategies().subscribe(config => {
@@ -53,12 +39,12 @@ export class ConfigViewComponent implements OnInit {
         this.selectedConfig = savedConfig;
       }
 
-      this.initializeSelections(); // Initialize or repopulate selections
+      this.initializeSelections();
     });
   }
 
 
-// Helper method to populate checkbox state based on saved configuration
+
 
 
   initializeSelections() {

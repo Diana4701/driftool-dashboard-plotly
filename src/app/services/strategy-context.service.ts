@@ -44,10 +44,10 @@ export class StrategyContextService {
   public executeOperation(operation: string, data: DataItem[], timePeriod: string): number {
     const strategyComponentType = this.getStrategyComponent(operation);
     if (strategyComponentType) {
-      const strategyComponentInstance = new strategyComponentType(); // Manually create the instance
+      const strategyComponentInstance = new strategyComponentType();
       return strategyComponentInstance.execute(data, timePeriod);
     }
-    return 0; // Default value if strategy is not found
+    return 0;
   }
 }
 

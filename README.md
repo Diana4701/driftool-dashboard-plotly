@@ -4,8 +4,8 @@
 # Dynamic Dashboard with Feature Flags Approach
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The feature-oriented dashboard leverages a feature flags approach to enable and disable certain functionalities dynamically based on configuration settings.  
-To validate the concept, a prototype dashboard has been developed using modern web technologies. The prototype implements the core features described above, focusing on the drift metric. Users can toggle between different features, allowing them to see how the dashboard can be configured to meet their specific needs. The prototype demonstrates how the initially defined user stories can be fulfilled, providing a solid foundation for future development.
-### Current Status
+To validate the concept, a prototype dashboard has been developed using Angular CLI, Plotly.js. The dashboard is implemented with feature flags approach and as second comparative method with strategy pattern structure. The prototype implements the core features described above, focusing on the drift metric. Users can toggle between different features, allowing them to see how the dashboard can be configured to meet their specific needs. The prototype demonstrates how the initially defined user stories can be fulfilled, providing a solid foundation for future development.
+### Current Status (Feature Flags)
 
 Due to time constraints, only a subset of the intended features has been implemented and is functional. The features currently available are:
 
@@ -18,6 +18,25 @@ Due to time constraints, only a subset of the intended features has been impleme
 - **Interactive Features:** The dashboard includes a zoom feature in the average chart.
 
 These functionalities represent the core capabilities of the dashboard, with plans for further features to be added or toggled using the feature flags system in future iterations.
+
+## Current status (Strategy Pattern)
+
+### Features Implemented
+
+- **Sum Calculation**: The application supports calculating the sum of data items using the `SumStrategyComponent`. This feature aggregates values across the provided dataset.
+
+- **Average Calculation**: The application supports calculating the average of data items using the `AverageStrategyComponent`. This feature computes the mean value from the dataset.
+
+- **Last Three Days Feature**: The application includes functionality to analyze data for the last three days using the `TimePeriodStrategyComponent`. This feature filters and processes data from the most recent three days.
+
+### Limitations
+
+- **Constraints on Number of Charts**: The current implementation does not impose any constraints on the maximum number of charts that can be generated. Users can view as many charts as their data and system resources allow.
+
+- **Time Option Selection**: The application does not require users to select a time option to filter or display data. The `TimePeriodStrategyComponent` automatically processes data for the last three days without requiring additional time period configuration from the user.
+
+- **Interactive Features**: The current implementation does not include interactive features for controlling or customizing charts beyond what is provided by the Plotly.js framework. Features such as interactive filtering, dynamic updates, or user-driven chart customization are not part of this implementation. The application relies on Plotly.js's built-in capabilities for chart rendering and interaction.
+
 
 ## How to Use
 
@@ -41,5 +60,5 @@ These functionalities represent the core capabilities of the dashboard, with pla
     - Use the dashboard view to see the visualizations based on the selected toggles.
 
 6. **Resetting Settings**:
-    - Utilize the reset functionality within the application to clear all selected settings in the configuration panel and revert to the default configuration.
+    - Utilize the reset functionality within the application to clear all selected settings in the configuration panel and revert to the default configuration (fully working in Feature Flags appraoch).
 

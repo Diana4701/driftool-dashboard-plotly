@@ -14,7 +14,7 @@ import {AnalysisStrategy} from "../../strategies/analysis-strategy";
 
 export class MaxThreeTogglesComponent /*implements AnalysisStrategy*/ {
  /* execute(checkboxes: CheckboxState): void {
-    // Define behavior that limits to a maximum of three checkboxes
+  
     const selectedCount = Object.values(checkboxes).filter(option => option.checked).length;
     if (selectedCount > 3) {
       console.log('You can select a maximum of three checkboxes');

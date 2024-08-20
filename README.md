@@ -21,43 +21,25 @@ These functionalities represent the core capabilities of the dashboard, with pla
 
 ## How to Use
 
-1. **Configuration**: Users can configure feature flags components via the configuration view. This includes choosing whether to calculate the sum or average of the data and the time period.
+1. **Extract the Zip File**:
+    - Unzip the provided file to a directory of your choice.
 
-2. **Viewing Data**: Navigate to the dashboard view to see the resulting charts based on the selected toggles.
+2. **Install Dependencies**:
+    - Open a terminal or command prompt.
+    - Navigate to the unzipped project directory.
+    - Run `npm install` to install all necessary dependencies.
 
-3. **Resetting Settings**: Use the reset functionality to clear all selected settings and return to the default configuration.
+3. **Configuration**:
+    - Open the application in your preferred code editor.
+    - Configure feature flags via the configuration view. You can choose to calculate the sum or average of the data and select the time period for analysis.
 
-### Prerequisites
+4. **Running the Application**:
+    - Run `ng serve` in the terminal to start the development server.
+    - Navigate to `http://localhost:4200/` in your web browser to view the dashboard.
 
-Before running the project, ensure you have the following installed:
+5. **Viewing Data**:
+    - Use the dashboard view to see the visualizations based on the selected toggles.
 
-1. **Node.js and npm**:
-   - Install the latest stable version of Node.js from the [official Node.js website](https://nodejs.org/).
-   - npm is included with Node.js, so it will be installed automatically.
-
-2. **Angular CLI**:
-   - Install Angular CLI globally using npm by running the following command:
-
-   ```sh
-   npm install -g @angular/cli
-
-3. **Install Plotly**
-   - This project uses Plotly for charting, install it with:
-   npm install plotly.js-dist-min --save
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+6. **Resetting Settings**:
+    - Utilize the reset functionality within the application to clear all selected settings in the configuration panel and revert to the default configuration.
 

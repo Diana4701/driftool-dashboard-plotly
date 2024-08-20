@@ -39,11 +39,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - **Interactive Controls**: Develop additional interactive features for real-time chart customization and data manipulation.
 
-## Installation and Setup
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-repository-url.git
 
 ## Development server
 

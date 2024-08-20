@@ -17,11 +17,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ### Limitations
 
-- **Constraints on Number of Charts**: The current implementation does not impose any constraints on the maximum number of charts that can be generated. Users can view as many charts as their data and system resources allow.
+- **Constraints on Number of Charts**: The current implementation does not impose any constraints on the maximum number of charts that can be generated. 
 
-- **Time Option Selection**: The application does not require users to select a time option to filter or display data. The `TimePeriodStrategyComponent` automatically processes data for the last three days without requiring additional time period configuration from the user.
+- **Time Option Selection**: Users must select a time interval to view the calculated statement drift measures, whether it be the average, sum, or other metrics.
 
-- **Interactive Features**: The current implementation does not include interactive features for controlling or customizing charts beyond what is provided by the Plotly.js framework. Features such as interactive filtering, dynamic updates, or user-driven chart customization are not part of this implementation. The application relies on Plotly.js's built-in capabilities for chart rendering and interaction.
+- **Interactive Features**: The current implementation does not include interactive features for controlling or customizing charts beyond what is provided by the Plotly.js framework. 
 
 
 ## How to Use

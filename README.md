@@ -4,7 +4,7 @@
 # Dynamic Dashboard with Feature Flags Approach
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The feature-oriented dashboard leverages a feature flags approach to enable and disable certain functionalities dynamically based on configuration settings.  
-To validate the concept, a prototype dashboard has been developed using Angular CLI, Plotly.js. The dashboard is implemented with feature flags approach and as second comparative method with strategy pattern structure. The prototype implements the core features described above, focusing on the drift metric. Users can toggle between different features, allowing them to see how the dashboard can be configured to meet their specific needs. The prototype demonstrates how the initially defined user stories can be fulfilled, providing a solid foundation for future development.
+To validate the concept, a prototype dashboard has been developed using Angular CLI, Plotly.js. The dashboard is implemented with feature flags approach and as second comparative method with strategy pattern concept. The prototype implements the core features described above, focusing on the drift metric. Users can toggle between different features, allowing them to see how the dashboard can be configured to meet their specific needs. The prototype demonstrates how the initially defined user stories can be fulfilled, providing a solid foundation for future development.
 ### Current Status (Feature Flags)
 
 Due to time constraints, only a subset of the intended features has been implemented and is functional. The features currently available are:

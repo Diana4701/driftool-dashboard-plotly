@@ -21,9 +21,9 @@ These functionalities represent the core capabilities of the dashboard, with pla
 
 ## How to Use
 
-1. **Configuration**: Users can configure the data and strategy components via the configuration view. This includes setting up data and choosing whether to calculate the sum or average of the data.
+1. **Configuration**: Users can configure feature flags components via the configuration view. This includes choosing whether to calculate the sum or average of the data and the time period.
 
-2. **Viewing Data**: Navigate to the dashboard view to see the resulting charts based on the selected strategy and configuration.
+2. **Viewing Data**: Navigate to the dashboard view to see the resulting charts based on the selected toggles.
 
 3. **Resetting Settings**: Use the reset functionality to clear all selected settings and return to the default configuration.
 

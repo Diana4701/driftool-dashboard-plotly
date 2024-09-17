@@ -67,7 +67,7 @@ export class AverageStrategyComponent implements AnalysisStrategy, OnChanges, Af
     const layout: Partial<Plotly.Layout> = {
       title: `Average Time Series over ${timePeriod}`,
       xaxis: { title: `${timePeriod}` },
-      yaxis: { title: 'Sum' },
+      yaxis: { title: 'Average' },
     };
 
     Plotly.newPlot(this.plotContainer.nativeElement, traces, layout);
